@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>h1</h1>
+    <p></p>
+    <p class="green">111</p>
+    <p id="p1s">p11111</p>
+    <p id="p2s">p222222</p>
+    <div class="green">div0000000</div>
+    <div id="p4">div11111</div>
+    <div id="p3">div222222</div>
+    <div id="div3">div333333</div>
+    <div id="div4" prom_name='aaa'>div44444</div>
+    <div id="div5" prom_name='bbb' style="display:none;">div455555</div>
+    <div>div666666</div>
+    <div id="div7" prom_name='bbb' style="display:none;">div477777</div>
+    <p prom_name="aaa">p-prom_name-aaa</p>
+    <p prom_name="bbb">p-prom_name-bbb</p>
+    <p>p4444</p>
+    <p style="display:none;">hiden</p>
+    <p style="display:none;">hiden</p>
+    <div>
+        <p>p in div</p>
+    </div>
+    <div>
+        <div>div in div</div>
+        <p>p in div</p>
+    </div>
+    <span>
+        <div>div in span</div>
+    </span>
+    <span>
+        <p>p in span</p>
+        <div>
+            <p>span{p in div}</p>
+        </div>
+    </span>
+
+
+
+</body>
+<script src="./jq/jquery-3.3.1.min.js"></script>
+<script>
+    // 找到'h1'或者id为'p1s'的标签
+    // $("h1,#p1s").css("color","green");
+    // 找到class为'green'的p标签
+    // $("p.green").css("color","green");
+    // 找到所有p标签或者class为'green'的标签
+    // $("p,.green").css("color","green");
+
+
+    // 内容包含'1'的p标签
+    // $("p:contains('1')").css("color","red");
+    // 内容为空的p标签
+    // $("p:empty").text("empty");
+    // 内容为空的p标签
+    // $("p:empty").text("empty");
+    // 含有p标签的div标签
+    // $("div:has(p)").css("color","red");
+    // 是父类并且是div标签的div标签,即使div无子节点也会被选中
+    // $("div:parent").css("color", "red");
+
+
+    // 找到prom_name为'aaa'的p标签
+    // $("p[prom_name='aaa']").text("find-prom_name-aaa")
+    // 找到prom_name不为'aaa'的p标签,即使不包含prom_name属性也会被选中
+    // $("p[prom_name!='aaa']").text("find-not-prom_name-aaa")
+    // 找到div标签中以p开头的id的标签
+    // $("div[id^='p']").text("find-start")
+    // 找到p标签中以s结尾的id的标签
+    // $("p[id$='s']").text("find-end-start")
+    // 找到任意以包含p的id的标签
+    // $("*[id*='p']").text("find-*-contain-start")
+    // 找到以p开头的id的标签
+    // $("*[id^='p']").text("find-*--start")
+
+
+    // 找到第一个的div标签,从0开始
+    // $("div:first").css("color","blue")
+    // 找到最后一个div标签,从0开始
+    // $("div:last").css("color","blue")
+    // 找到2序号的div标签,从0开始
+    // $("div:eq(2)").css("color","blue")
+    // 找到不等于2序号的div标签,从0开始,隐藏元素也算
+    // $("div:not(:eq(2))").css("color","blue")
+    // 找到大于2序号的div标签,从0开始,隐藏元素也算
+    // $("div:gt(2)").css("color","blue")
+    // 找到小于2序号的div标签,从0开始,隐藏元素也算
+    // $("div:lt(2)").css("color","blue")
+    // 找到奇数序号的div标签,从0开始,隐藏元素也算
+    // $("div:odd").css("color","blue") 
+    // 找到偶数数序号的div标签,从0开始,隐藏元素也算
+    // $("div:even").css("color","blue")
+
+
+    // 找到所有隐藏的div元素
+    // $("div:hidden").show();
+    // 找到所有显示的div元素
+    // $("div:visible").css("color","blue")
+
+    // 找到以id以'd'开头并且内容包含'4'并且可见的div元素
+    // $("div:hidden[id^='d'][prom_name!='aaa']:contains('4')").show().css("color","blue")
+    // 找到有'id'属性(必须有id)并且'prom_name'属性不为'aaa'(因为不等于所以可以没有'prom_name'属性)并且内容包含'4'的div标签
+    // $("div[id][prom_name!='aaa']:contains('4')").show().css("color","blue")
+</script>
+
+</html>

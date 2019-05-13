@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    button,input{
+        border: thin solid gray;
+    }
+</style>
+
+<body>
+    <!-- form手动选择上传,填写账号和密码 -->
+    <!-- <form method="OPTIONS" action="http://localhost:4000/"> -->
+    <form method="POST" action="http://192.168.1.101:4000/upload" enctype="multipart/form-data">
+    <!-- <form method="POST" action="http://localhost:4000/postData" enctype="multipart/form-data"> -->
+    <!-- <form method="POST" action="http://localhost:4000/postData" enctype="text/plain"> -->
+    <!-- <form method="GET" action="http://localhost:4000/getData"> -->
+        name:<input name="name"></br>
+        password:<input name="password" type="password"></br>
+        file:<input name="file" type="file"></br>
+        <!-- file2:<input name="file" type="file"></br> -->
+        <input id="submitBtn" type="submit"></br>
+    </form>
+    <!-- <h1>HELLO WORLD</h1> -->
+    <button id="onceBtn" style="width:3rem;height:2rem;background:#EEEEEE;">once</button>
+    <button id="ajaxBtn" style="width:3rem;height:2rem;background:#EEEEEE;">ajax</button>
+    <div>
+        <span>请求内容:</span>
+        <span id="content"></span>
+    </div>
+</body>
+<script src="./assets/jquery-3.3.1.min.js"></script>
+<script>
+    // console.log("898898--log")
+    // console.info("898898--info")
+    // console.warn("898898--warn")
+    // console.error("898898--error")
+
+    var id = 'Global';
+
+    function fun1() {
+        // setTimeout中使用普通函数
+        setTimeout(function () {
+            console.log(this)
+            console.log("fun1-" + this.id);
+        }, 2000);
+    }
+
+    function fun2() {
+        // setTimeout中使用箭头函数
+        setTimeout(() => {
+            console.log(this)
+            console.log("fun2-" + this.id);
+        }, 2000)
+    }
+
+    $("#onceBtn").one("click",function(){
+        console.log('onceBtn--click')
+    })
+
+    // var url = "http://www.baidu.com"
+    // if(confirm('你确定要前往' + url + '？')) {
+    //                 window.open(url);
+    //             }
+
+    fun1.call({
+        id: 'Obj'
+    }); // 'Global'
+
+    fun2.call({
+        id: 'Obj'
+    }); // 'Obj'
+
+    if (typeof (window) === "undefined") {
+        console.log("Node.js")
+    } else {
+        console.log("browser")
+    }
+
+    $("#ajaxBtn").click(function () {
+        // $.ajax({
+        //     type: "get",
+        //     url: "http://localhost:4000/hello/jack",
+        //     // url: "http://127.0.0.1:4000/files/txt.txt",
+        //     // url: "http://127.0.0.1:4567/files/txt.txt",
+        //     // url: "http://127.0.0.1:4567/hello/jack",
+        //     // data: "data",
+        //     // dataType: "json", 
+        //     success: function (response) {
+        //         console.log("------")
+        //         console.log(response);
+        //         $("#content").text(response)
+        //     }
+        // });
+
+
+        // $.ajax({
+        //     type: "post",
+        //     url: "http://localhost:4000/sign",
+        //     data: "{'name':'koa','password':'1234'}",
+        //     // dataType: "json", 
+        //     success: function (response) {
+        //         console.log("------")
+        //         console.log(response);
+        //         $("#content").text(response)
+        //     }
+        // });
+
+        $.ajax({
+            type: "get",
+            url: "http://localhost:4000/getData",
+            data: "{'name':'ko  a','password':'123'}",
+            // dataType: "json", 
+            success: function (data) {
+                console.log(data);
+                $("#content").text(data.msg)
+            }
+        });
+        // $.ajax({
+        //     type: "POST",
+        //     url: "http://172.20.105.87:4000/postData",
+        //     data: "{'name':'koa','password':'123'}",
+        //     // dataType: "json", 
+        //     success: function (data) {
+        //         console.log(data);
+        //         alert("123423")
+        //         $("#content").text(data.msg)
+        //     }
+        // });
+
+
+
+        // $.ajax({
+        //     type: "POST",
+        //     url: "http://localhost:4000/sql",
+        //     data: {'order':'1'},
+        //     // dataType: "json", 
+        //     success: function (data) {
+        //         console.log(data);
+        //         $("#content").text(data.msg)
+        //     }
+        // });
+
+    })
+</script>
+
+</html>

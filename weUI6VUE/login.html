@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEUI</title>
+    <script src="./vue/vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./weUI/jquery-weui.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./weUI/weui.min.css"> -->
+</head>
+<style>
+    .red {
+        background-color: red
+    }
+
+    .loginTitle {
+        text-align: center;
+    }
+
+    .loginContent {
+        /* background-color: gray; */
+        position: absolute;
+        top: 25%;
+        padding: 15px;
+    }
+
+    .bottom-div {
+        width: 100%;
+        height: 50px;
+        top: calc(100% - 20px);
+        display: block;
+        position: absolute;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="loginContent">
+        <h1 class="loginTitle">登录系统</h1>
+
+        <!-- 账密登录 -->
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">账号</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <!-- <input class="weui-input" id="loginAccount" placeholder="请填写账号" /> -->
+                    <input class="weui-input" id="loginAccount" v-model="account" placeholder="请填写账号" />
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">密码</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" id="loginPassword" v-model="password" type="password" placeholder="请填写密码" />
+                </div>
+            </div>
+
+            <div class="weui-cell weui-cell_select weui-cell_select-after"  @click=getUserId()>
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">租户ID</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <select class="weui-select" id="loginId" name="select2">
+                        <option value="0">请选择</option>
+                        <!-- <option value="1">中国</option>
+                        <option value="2">美国</option>
+                        <option value="3">英国</option> -->
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="page__bd page__bd_spacing">
+            <a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" id="loginBtn" @click=login()>登录</a>
+        </div>
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '.loginContent',
+            data: {
+                account: "",
+                password: "",
+            },
+            methods: {
+                getUserId:function(){
+                    alert(3)
+                },
+                login:function(){
+                    alert("login");                    
+                },
+            },
+            computed: {},
+            watch: {
+                account: function (val) {
+                    isLoginBtnEnable();
+                },
+                password: function (val) {
+                    isLoginBtnEnable();
+                },
+            }
+        });
+        // // $watch 是一个实例方法
+        // vm.$watch('account', function (newValue, oldValue) {
+        //     // 这个回调将在 vm.kilometers 改变后调用
+        //     console.log("newww")
+        //     // document.getElementById("info").innerHTML = "修改前值为: " + oldValue + "，修改后值为: " + newValue;
+        // })
+            
+        function isLoginBtnEnable() {
+            if (document.getElementById("loginAccount").value.length > 0 && document.getElementById("loginPassword").value.length > 0) {
+                document.getElementById("loginBtn").classList.remove("weui-btn_disabled");
+            } else {
+                document.getElementById("loginBtn").classList.add("weui-btn_disabled");
+            }
+        };
+
+        // function loginBtnDidClick() {
+        //     alert("login");
+        // }
+
+        // window.onload = function(){
+        //     isLoginBtnEnable();
+        // }
+    </script>
+</body>
+
+</html>

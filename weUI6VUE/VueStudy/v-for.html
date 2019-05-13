@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-for -->
+        <ul v-for="item in list">
+            <li>{{item.name}}</li>
+        </ul>
+
+        <ul v-for="(item,index) in list">
+            <li>{{index+1}}--{{item.name}}</li>
+        </ul>
+
+        <ul v-for="item in list">
+            <li>{{item.name}}</li>
+            <ul v-for="(key,val) in item">
+                <li>{{key}}--{{val}}</li>
+            </ul>
+        </ul>
+
+        <ul v-for="item in list">
+            <li v-for="(key,val) in item">
+                <p>{{key}}--{{val}}</p>
+            </li>
+            <br>
+        </ul>
+
+
+        <hr>
+    </div>
+
+
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            list: [{
+                    name: "jack",
+                    age: 19,
+                    score: 88
+                },
+                {
+                    name: "rose",
+                    age: 39,
+                    score: 98
+                },
+                {
+                    name: "jim",
+                    age: 31,
+                    score: 85
+                },
+                {
+                    name: "mick",
+                    age: 12,
+                    score: 58
+                },
+            ]
+        },
+        methods: {
+
+        }
+    })
+</script>
+
+</html>

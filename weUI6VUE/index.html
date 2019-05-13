@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue/vue.min.js"></script>
+    <link rel="stylesheet" href="lib/vux/vux.css">
+</head>
+<style>
+    .red {
+        background-color: red
+    }
+</style>
+
+<body>
+    <!-- <div id="app">
+        <p>{{message}}</p>
+    </div>
+
+    <p>--------------------</p>
+    <div id="app2">
+        <h1>url1:{{url}}</h1>
+        <h1>func:{{test()}}</h1>
+    </div>
+
+    <p>--------------------</p>
+    <div class="app3">
+        <h1>url2:{{url}}</h1>
+    </div>
+
+    <p>--------------------</p>
+    <div id="app4">
+        <h1>{{5-6}}</h1>
+        <div v-bind:id="'list-'+ied">idtest</div>
+        <div v-bind:class="{'red':redd}">classtest</div>
+        <p v-if="seee">是否隐藏</p>
+        <a v-bind:href="url">插入url</a>
+        <br>
+        <a v-on:click="dosom">点击做一些操作</a>
+    </div>
+    <div id="test">1234</div> -->
+
+    <p>---------app5-----------</p>
+    <!-- 双向绑定 -->
+    <div id="app5">
+        <p v-text="app5Text"></p>
+        <p>{{messagee}}</p>
+        <input v-model="messagee">
+        <button v-on:click="reverse">反转标题</button>
+    </div>
+
+    <p>----------app6----------</p>
+    <div id="app6">
+        <my-ccomponent></my-ccomponent>
+        <my-ccomponent></my-ccomponent>
+        <my-ccomponent></my-ccomponent>
+        <tabbar></tabbar>
+    </div>
+
+    <p>----------app7----------</p>
+    <form id="app7" v-on:submit.prevent="register">
+        <input type="text" v-model="email" placeholder="电子邮箱">
+        <br>
+        <input type="text" v-model="name" placeholder="账户名">
+        <br>
+        <input type="password" v-model="password" placeholder="密码">
+        <br>
+        <input type="submit" v-model="login">
+    </form>
+
+    <p>----------app8----------</p>
+    <ol id="app8">
+        <li v-for="t in todos">
+            <dl>
+                <!-- <dt>eee</dt>
+                <dd>dede</dd> -->
+                <dt>{{t.name}}</dt>
+                <dd>{{t.age}}</dd>
+            </dl>
+        </li>
+    </ol>
+
+
+    <!--include Vue-->
+    <script src="lib/vue/Vue-v1.0.21.min.js"></script>
+    <script src="lib/vue/vue-router.min.js"></script>
+    <script src="lib/vue/vue-resource.min.js"></script>
+
+    <!--include the components-->
+    <script src="lib/vux/components/badge/index.js"></script>
+    <script src="lib/vux/components/group/index.js"></script>
+    <script src="lib/vux/components/cell/index.js"></script>
+    <script src="lib/vux/components/flexbox/index.js"></script>
+    <script src="lib/vux/components/flexbox-item/index.js"></script>
+    <script src="lib/vux/components/tabbar/index.js"></script>
+    <script src="lib/vux/components/tabbar-item/index.js"></script>
+    <script src="lib/vux/components/x-header/index.js"></script>
+    <script src="lib/vux/components/divider/index.js"></script>
+    <script src="lib/vux/components/loading/index.js"></script>
+    <script src="lib/vux/components/swiper/index.js"></script>
+    <script src="lib/vux/components/swiper-item/index.js"></script>
+
+    <script>
+        Vue.component("badge", vuxBadge);
+        Vue.component("group", vuxGroup);
+        Vue.component("cell", vuxCell);
+        Vue.component("flexbox", vuxFlexbox);
+        Vue.component("flexbox-item", vuxFlexboxItem);
+        Vue.component("tabbar", vuxTabbar);
+        Vue.component("tabbar-item", vuxTabbarItem);
+        Vue.component("x-header", vuxXHeader);
+        Vue.component("divider", vuxDivider);
+        Vue.component("loading", vuxLoading);
+        Vue.component("swiper", vuxSwiper);
+        Vue.component("swiper-item", vuxSwiperItem);
+
+        Vue.component('my-ccomponent', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button v-on:click="count++">You clicked me {{count}}-- {{ count }} times.</button>'
+        })
+        new Vue({
+            el: "#app6"
+        });
+
+         var listVM = new Vue({
+            el: "#app8",
+            data: {
+                todos: [{
+                        name: "aaa",
+                        age: "2"
+                    },
+                    {
+                        name: "bbb",
+                        age: "3"
+                    },
+                    {
+                        name: "ccc",
+                        age: "4"
+                    },
+                ]
+            },
+        });
+        listVM.todos[1].name = "jack";
+        listVM.todos[0] = ({name:"jake",age:"234"});
+        listVM.todos.push({name:"rose",age:"a33"});
+        console.log(listVM.todos)
+        // listVM.todos.removeSub()
+
+        new Vue({
+            el: "#app7",
+            data: {
+                // email: "email",
+                // name: "name",
+                // password:"",
+                login: "登录"
+            },
+            methods: {
+                register: function () {
+                    // console.log(JSON.stringify(this.data))
+                    console.log(this.email)
+                    console.log(this.name)
+                    console.log(this.password)
+                }
+            }
+
+        });
+
+        new Vue({
+            el: "#app",
+            data: {
+                message: "hello world--too"
+            }
+        });
+        new Vue({
+            el: "#app2",
+            data: {
+                url: "http://www.1234.com"
+            },
+            methods: {
+                test: function () {
+                    // alert("1234")
+                    return "tsts!!"
+                }
+            }
+        });
+        var vm = new Vue({
+            el: ".app3",
+            data: {
+                url: "calss"
+            }
+        });
+
+        // vm.url = "82class";
+        // document.write(vm.$el)
+        // document.write("<br>")
+        // document.write(vm.el)
+
+        new Vue({
+            el: "#app4",
+            data: {
+                // id变成list-1,替换ide
+                ied: 1,
+                // true或者false决定是否采用'red'这个class
+                redd: true,
+                // seee的true就表示显示
+                seee: true,
+                // 设置href的属性
+                url: "http://www.baidu.com"
+            },
+            methods: {
+                // 
+                dosom: function () {
+                    alert("click")
+                }
+
+            }
+        });
+
+        // document.getElementById("list-1").innerHTML = "id223434";
+
+        new Vue({
+            el: "#app5",
+            data: {
+                messagee: "输入框和标签数据同步变化",
+                app5Text: "app5标题"
+            },
+            methods: {
+                reverse: function () {
+                    this.messagee = this.messagee.split("").reverse().join("");
+                }
+            },
+            ready: function () {
+                // alert("app5")
+                console.log("324")
+            }
+        });
+    </script>
+</body>
+
+</html>

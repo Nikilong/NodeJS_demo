@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<style>
+    #bag {
+        background: url("./image/on.png") no-repeat;
+        width: 5rem;
+        height: 5rem;
+        margin: 0 auto;
+    }
+
+    #progress {
+        width: 5rem;
+        height: 1rem;
+        margin: 0 auto;
+        border: gray 1px solid;
+
+    }
+
+    #progress div {
+        background-color: green;
+        height: 1rem;
+        width: 100%;
+    }
+
+    #button-div {
+        width: 8rem;
+        height: 1rem;
+        margin: 0 auto;
+        padding-top: 1rem;
+    }
+
+    /* 切换图片 */
+    #bag.fobid{
+        background: url("./image/off.png") no-repeat;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <!-- 图片 -->
+        <div id="bag" :class="{fobid:end}">
+
+        </div>
+
+        <!-- 进度条 -->
+        <div id="progress">
+            <div :style="{width:life + '%'}"></div>
+        </div>
+
+        <!-- 控制按钮 -->
+        <div id="button-div">
+            <button @click="minis" v-show="!end">砸一下</button>
+            <button @click="restart">重新开始</button>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            life: 100,      // 生命值
+            end:false,      // 游戏是否结束
+        },
+        methods: {
+            minis: function () {
+                this.life -= 25;
+                if(this.life <= 0){
+                    this.end = true;
+                }
+
+            },
+            restart: function () {
+                this.life = 100;
+                this.end = false;
+            }
+        }
+    })
+</script>
+
+</html>

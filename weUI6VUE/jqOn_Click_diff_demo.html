@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    
+    #staticDiv-on-btn {
+        background: plum;
+    }
+    @import url("./green.css");
+
+    /* .staticDiv-on {
+        background: goldenrod;
+    }
+
+    button {
+        background: #eeeeee; 
+        border: thin solid #000000;
+    } */
+</style>
+
+<body>
+
+    <button id="NewOn">NewOn</button>
+    <button id="NewClick">NewClick</button>
+    <input type="radio">
+    <div>static-div<button id="staticDiv-on-btn" class='staticDiv-on'>delete--on</button></div>
+    <div>static-div<button class='staticDiv-click'>delete--click</button></div>
+</body>
+<script src="./jq/jquery-3.3.1.min.js"></script>
+<script src="./lib/vConsole/vconsole.min.js"></script>
+<script>document.body.appendChild(document.createElement('script')).src = '//w.cnzz.com/c.php?m='+Date.now()</script>
+<script>document.head.appendChild(document.createElement('link')).href='./xxx.css?m='+Date.now()</script>
+<script src="./jq/jquery-3.3.1.min.js"></script>
+<script>
+    var aaa = "菜单";
+    $(function () {
+        // 初始化vConsole
+        window.vConsole = new window.VConsole();
+
+
+        console.log("jq----onload")
+        $("#NewClick").click(function () {
+            $("body").append(
+                "<div>new-div<button class='newdiv-click newDiv'>delete--click</button></div>")
+        })
+        $("#NewOn").on("click", function () {
+            $("body").append("<div>new-div<button class='newdiv-on newDiv'>delete--on</button></div>")
+        })
+
+        // 静态元素添加click
+        $(".staticDiv-on").click(function () {
+            console.log("staticDiv-on-delete--click")
+            $(this).parent().remove();
+        })
+        // 静态元素添加on
+        $(".staticDiv-click").on("click", function () {
+            console.log("staticDiv-click-delete--click")
+            $(this).parent().remove();
+        })
+
+
+        // on前面的元素必须不是动态的元素
+        $("body").on("click", ".newDiv", function () {
+            console.log("delete--on")
+            // console.log($("body").find(".newDiv"));  // 可以找到该动态元素,但是不能click直接添加事件
+            $(this).parent().remove();
+        })
+
+        // newDiv是动态元素,不能直接click
+        $("body").find(".newDiv").click(function () {
+            console.log("delete--find-click")
+            $(this).parent().remove();
+        })
+
+
+    })
+
+    $(function () {
+        console.log("jq----onload--2")
+        // 静态元素添加click
+        $(".staticDiv-on").click(function () {
+            console.log("staticDiv-on-delete--click---2")
+            $(this).parent().remove();
+        })
+    });
+</script>
+
+</html>

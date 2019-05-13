@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEUI</title>
+    <!-- <script src="./vue/vue.min.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="./weUI/jquery-weui.css">
+    <link rel="stylesheet" href="./vux/vux.css">
+
+    <!-- <link rel="stylesheet" type="text/css" href="./weUI/weui.min.css"> -->
+</head>
+<style>
+    .attachment_cent_list_down {
+        background-size: 0.4rem 100% !important;
+        background: #f3f3f3 url(./images/fujian_bg.png) no-repeat;
+        /* background-position: 0 100%; */
+    }
+
+    .html_btn{
+        width:100%;
+        height:100px;
+        font-size:3rem;
+        background-color: blue;
+        color: white;
+    }
+    .html_btn:hover{
+        background-color: white;
+        color: blue;
+    }
+</style>
+
+<body>
+
+    <button class="html_btn" style="">html按钮</button>
+
+    <div id="app">
+        <!-- cell -->
+        <group title="Use is-link to show arrow">
+            <cell :title="message" class="attachment_cent_list_down">
+                <badge text="1"></badge>
+            </cell>
+            <cell :title="message" is-link style="border-left: 9px solid green;background: #eeeeee;"> 
+                <spinner type="crescent"></spinner>
+            </cell>
+            <cell :title="message" value="long long long longlong" is-link>
+                <spinner type="lines"></spinner>
+                <img slot="icon" width="20" style="display:block;margin-right:5px;"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=">
+            </cell>
+        </group>
+
+
+        <!-- 按钮 -->
+        <div style="padding: 1rem;" style="display: none;">
+            <x-button type="primary" @click="say">submit</x-button>
+            <x-button @click="say">确定<i class="weui-loading"></i></x-button>
+            <x-button plain type="primary" style="border-radius:99px;">primary<spinner type="ripple"></spinner>
+            </x-button>
+            <x-button plain type="warn" show-loading class="custom-primary-red">primary</x-button>
+            <x-button :gradients="['#A644FF', '#FC5BC4']">iOS Gradients</x-button>
+        </div>
+
+        <!-- 加载动态图 -->
+        <group style="display: none;">
+            <cell v-for="type in types" :title="type">
+                <spinner :type="type"></spinner>
+            </cell>
+        </group>
+
+
+
+        <!-- <group>
+            <cell title="news">
+                <marquee>
+                    <marquee-item v-for="i in 5" :key="i" @click.native="onClick(i)">
+                        {{JavaScript is the best language}} {{i}}</marquee-item>
+                </marquee>
+            </cell>
+            </group> -->
+
+        <!-- weui进度条 -->
+        <div class="page__bd page__bd_spacing" style="display: none;">
+            <div class="weui-progress">
+                <div class="weui-progress__bar">
+                    <div class="weui-progress__inner-bar js_progress" style="width: 0%;"></div>
+                </div>
+                <a href="javascript:;" class="weui-progress__opr">
+                    <i class="weui-icon-cancel"></i>
+                </a>
+            </div>
+            <br>
+            <div class="weui-progress">
+                <div class="weui-progress__bar">
+                    <div class="weui-progress__inner-bar js_progress" style="width: 50%;"></div>
+                </div>
+                <a href="javascript:;" class="weui-progress__opr">
+                    <i class="weui-icon-cancel"></i>
+                </a>
+            </div>
+            <br>
+            <div class="weui-progress">
+                <div class="weui-progress__bar">
+                    <div class="weui-progress__inner-bar js_progress" style="width: 80%;"></div>
+                </div>
+                <a href="javascript:;" class="weui-progress__opr">
+                    <i class="weui-icon-cancel"></i>
+                </a>
+            </div>
+            <div class="weui-btn-area">
+                <a href="javascript:;" class="weui-btn weui-btn_primary" id="btnUpload">上传</a>
+            </div>
+        </div>
+
+
+    </div>
+    <p id="info"></p>
+
+</body>
+
+<script src="./jq/jquery-3.3.1.min.js"></script>
+<!--vue 组件-->
+<script src="./vux/Vue-v1.0.21.min.js"></script>
+<script src="./vux/vue-resource.min.js"></script>
+<script src="./vux/components/actionsheet/index.js"></script>
+<script src="./vux/components/switch/index.js"></script>
+<script src="./vux/components/radio/index.js"></script>
+<script src="./vux/components/badge/index.js"></script>
+<script src="./vux/components/group/index.js"></script>
+<script src="./vux/components/group-title/index.js"></script>
+<script src="./vux/components/popup/index.js"></script>
+<script src="./vux/components/cell/index.js"></script>
+<script src="./vux/components/tab/index.js"></script>
+<script src="./vux/components/tab-item/index.js"></script>
+<script src="./vux/components/x-header/index.js"></script>
+<script src="./vux/components/divider/index.js"></script>
+<script src="./vux/components/search/index.js"></script>
+<script src="./vux/components/checker/index.js"></script>
+<script src="./vux/components/checker-item/index.js"></script>
+<script src="./vux/components/x-textarea/index.js"></script>
+<script src="./vux/components/x-input/index.js"></script>
+<script src="./vux/components/x-button/index.js"></script>
+<script src="./vux/components/sticky/index.js"></script>
+<script src="./vux/components/loading/index.js"></script>
+<script src="./vux/components/dialog/index.js"></script>
+<script src="./vux/components/toast/index.js"></script>
+<script src="./vux/components/alert/index.js"></script>
+<script src="./vux/components/inline-calendar/index.js"></script>
+<script src="./vux/components/checklist/index.js"></script>
+<script src="./vux/components/datetime/index.js"></script>
+<script src="./vux/components/confirm/index.js"></script>
+<script src="./vux/components/spinner/index.js"></script>
+
+
+<script>
+    Vue.component("actionsheet", vuxActionsheet);
+    Vue.component("switch", vuxSwitch);
+    Vue.component("radio", vuxRadio);
+    Vue.component("group", vuxGroup);
+    Vue.component("popup", vuxPopup);
+    Vue.component("tab", vuxTab);
+    Vue.component("tab-item", vuxTabItem);
+    Vue.component("x-header", vuxXHeader);
+    Vue.component("inline-calendar", vuxInlineCalendar);
+    Vue.component("search", vuxSearch);
+    Vue.component("x-button", vuxXButton);
+    Vue.component("checker", vuxChecker);
+    Vue.component("checker-item", vuxCheckerItem);
+    Vue.component("cell", vuxCell);
+    Vue.component("dialog", vuxDialog);
+    Vue.component("loading", vuxLoading);
+    Vue.component("x-textarea", vuxXTextarea);
+    Vue.component("toast", vuxToast);
+    Vue.component("alert", vuxAlert);
+    Vue.component("checklist", vuxChecklist);
+    Vue.component("datetime", vuxDatetime);
+    Vue.component("confirm", vuxConfirm);
+    Vue.component("spinner", vuxSpinner);
+
+    Vue.use(VueResource);
+
+    !function(e){
+        alert(9999+e)
+    }("strign")
+    function addScriptTag(src) {
+        var script = document.createElement('script');
+        script.setAttribute("type", "text/javascript");
+        script.src = src;
+        document.body.appendChild(script);
+    }
+
+    function foo(data) {
+        console.log('Your public IP address is: ' + data.ip);
+    }
+
+    addScriptTag(
+        "http://www.kuaidi100.com/query?type=%E5%BF%AB%E9%80%92%E5%85%AC%E5%8F%B8%E4%BB%A3%E5%8F%B7&postid=%E5%BF%AB%E9%80%92%E5%8D%95%E5%8F%B7?callback=foo"
+        )
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: "this is title",
+            types: ['android', 'ios', 'ios-small', 'bubbles', 'circles', 'crescent', 'dots', 'lines', 'ripple',
+                'spiral'
+            ],
+        },
+        methods: {
+            say: function (e) {
+                console.log("heeeee")
+                console.log($(e.currentTarget).next())
+                $(e.currentTarget).next().attr("disabled", "true")
+                $(e.currentTarget).next().addClass("weui_btn_disabled")
+            },
+        },
+        computed: {},
+        watch: {
+            kilometers: function (val) {
+                this.kilometers = val;
+                this.meters = val * 1000;
+            },
+            meters: function (val) {
+                this.kilometers = val / 1000;
+                this.meters = val;
+            }
+        }
+    });
+    // $watch 是一个实例方法
+    vm.$watch('kilometers', function (newValue, oldValue) {
+        // 这个回调将在 vm.kilometers 改变后调用
+        document.getElementById("info").innerHTML = "修改前值为: " + oldValue + "，修改后值为: " + newValue;
+    })
+</script>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{name}}</h1>
+        <button @click="age++">加一</button>
+        <button @click="age--">减一</button>
+        <!--TODO: 为什么执行a++就会找合成死循环呢?-->
+        <!-- <button @click="a++">A++</button> -->
+        <!-- <button @click="Aplus">A++</button> -->
+        <button @click="count++">按钮</button>
+        <p>age ---- {{age}}</p>
+        <p>count ---- {{count}}</p>
+        <p>a ---- {{a}}</p>
+        <!-- 这样会一直更新,addToA()和addToB()会随着button的点击而执行 -->
+        <p>age + a === {{addToA()}}</p>
+        <p>age + b === {{addToB()}}</p>
+        <!-- <button @click="addToA">a+1</button>
+        <button @click="addToB">b+1</button> -->
+
+        <hr>
+    </div>
+
+
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            name: "longchaoqian",
+            age: 20,
+            count: 0,
+            a: 0,
+            b: 0,
+        },
+        methods: {
+            Aplus: function () {
+                console.log("a----")
+                this.a++;
+            },
+            addToA: function () {
+                console.log("aaaa")
+                this.age += this.a;
+                return this.age;
+            },
+            addToB: function () {
+                console.log("bbbb")
+                this.age += this.b;
+                return this.age;
+            },
+
+        }
+    })
+</script>
+
+</html>
