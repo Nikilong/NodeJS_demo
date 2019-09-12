@@ -43,13 +43,14 @@ loader.define(function(require,exports,module) {
                     html += `
                         <li id="${el.id}" class="bui-btn bui-box-align-top">    
                             <div class="thumbnail">
-                                <img src="${el.ImgPath}" alt="">
+                                <img src="${el.thumbnails[0].url}" alt="">
                             </div>    
                             <div class="span1">        
                                 <h3 class="item-title">${el.title}</h3>        
                                 <div class="item-text bui-box">            
-                                    <div class="span1"><span class="cate">${el.ExInforSources}</span></div>
+                                    <div class="span1"><span class="cate">${el.source_name}</span></div>
                                     <span class="stick">${el.article_like_cnt}点赞</span>  
+                                    <span class="stick">${el.cmt_cnt}评论</span>  
                                 </div>
                             </div>
                         </li>
