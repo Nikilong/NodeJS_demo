@@ -1,5 +1,5 @@
 var common = {
-    getNewsByChannel:function(channel,success,falied){
+    getNewsByChannel__old:function(channel,success,falied){
         console.log("hi----",channel)
         bui.ajax({
             url: "http://localhost:4001/servers",
@@ -31,4 +31,7 @@ var common = {
             falied && falied(result);
         });
     },
+    getNewsByChannel:function () {
+        
+    }
 }

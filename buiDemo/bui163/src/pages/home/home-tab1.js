@@ -19,7 +19,7 @@ loader.define(function(require,exports,module) {
         })
     }
 
-    pageview.list = function () {
+    pageview.list = function (){
         var slideHeight = $(window).height() - $(".bui-bar-side").height() - $("#uiNewsTabNav").height();
 
         // 计算列表的高度
@@ -27,9 +27,37 @@ loader.define(function(require,exports,module) {
 
         var uiList = bui.list({
             id: "#uiScroll",
-            url: "json/article-list.json",
-            data: {},
-            template: template,
+            url: "http://localhost:4001/servers",
+            data: {
+                HEADER: {},
+				PARAMS: {},
+				SERVICE: "NewsService.getNewsByChannel"
+            },//接口请求的参数
+            // 可选参数
+            method: "post",
+            template: function template (data) {
+                console.log("-----",data)
+                var html = '';
+                $.each(data,function(index, el) {
+                    console.log(el);
+                    html += `
+                        <li id="${el.id}" class="bui-btn bui-box-align-top">    
+                            <div class="thumbnail">
+                                <img src="${el.ImgPath}" alt="">
+                            </div>    
+                            <div class="span1">        
+                                <h3 class="item-title">${el.title}</h3>        
+                                <div class="item-text bui-box">            
+                                    <div class="span1"><span class="cate">${el.ExInforSources}</span></div>
+                                    <span class="stick">${el.article_like_cnt}点赞</span>  
+                                </div>
+                            </div>
+                        </li>
+                    `;
+                });
+    
+                return html;
+            },
             height: listHeight,
             commandRefresh: "prepend",
             page:1,
@@ -37,7 +65,7 @@ loader.define(function(require,exports,module) {
             field: {
                 page: "page",        // 分页字段
                 size: "pageSize",    // 页数字段
-                data: ""         // 数据
+                data: "RESULT"         // 数据
             },
             onRefresh: function (scroll,data) {
                 var firstObj = data[0];
@@ -53,28 +81,6 @@ loader.define(function(require,exports,module) {
                 bui.load({url:"pages/detail/detail.html?id="+id});
             }
         });
-
-        //生成列表的模板
-        function template (data) {
-            var html = '';
-
-            $.each(data,function(index, el) {
-                html += '<li id="'+el.Id+'" class="bui-btn bui-box-align-top">';
-                html += '    <div class="thumbnail"><img src="'+el.ImgPath+'" alt=""></div>';
-                html += '    <div class="span1">';
-                html += '        <h3 class="item-title">'+el.Name+'</h3>';
-                html += '        <div class="item-text bui-box">';
-                html += '            <div class="span1">';
-                html += '               <span class="cate">'+el.ExInforSources+'</span>';
-                html += '            </div>';
-                html += '            <span class="stick">'+el.CommentsNum+'跟帖</span>';
-                html += '        </div>';
-                html += '    </div>';
-                html += '</li>';
-            });
-
-            return html;
-        };
     }
 
     pageview.init = function () {
@@ -85,11 +91,12 @@ loader.define(function(require,exports,module) {
         // 初始化列表
         this.list();
 
-        common.getNewsByChannel("",function(data){
-            console.log(data)
-        },function(err){
-            console.log(err)
-        });
+        common.getNewsByChannel();
+        // common.getNewsByChannel("",function(data){
+        //     console.log(data)
+        // },function(err){
+        //     console.log(err)
+        // });
     }
 
     // 初始化
