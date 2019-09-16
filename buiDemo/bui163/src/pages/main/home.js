@@ -47,7 +47,7 @@ loader.define(["main"],function(main,require,exports,module) {
            scroll: false,
            animate: false,
            // 1: 声明是动态加载的tab
-           autoload: true
+           autoload: true,
        })
        // 让顶部导航滚动到可视位置
         uiNewsTab.on("to",function (index) {
@@ -59,7 +59,8 @@ loader.define(["main"],function(main,require,exports,module) {
             var index = index,
                 num = index +1 ;
             // 加载对应的脚本文件
-              loader.require(["pages/home/home-tab"+num]);
+              loader.require(["pages/home/home-tab1"]);
+            //   loader.require(["pages/home/home-tab"+num]);
         }).to(0)
 
 
