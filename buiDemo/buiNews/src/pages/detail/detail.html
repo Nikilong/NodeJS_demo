@@ -1,0 +1,45 @@
+<div class="bui-page detail-page">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <!-- 左边按钮 -->
+            <a class="bui-btn btn-back"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main"></div>
+        <div class="bui-bar-right">
+            <!-- 右边按钮 -->
+            <a class="bui-btn"><i class="icon-more"></i></a>
+        </div>
+    </header>
+    <main>
+        <iframe id="mainContent" height="13rem" width="10rem" frameborder="0"></iframe>
+        <!-- 自定义弹出菜单结构	 -->
+        <div id="actionsheet" class="bui-actionsheet actionsheet-custom" style="display: none">
+            <ul class="bui-nav-icon bui-fluid-4">
+                <li class="bui-btn">
+                    <i class="icon"><img src="images/share/icon-weibo.png" alt=""></i>新浪微博
+                </li>
+                <li class="bui-btn">
+                    <i class="icon"><img src="images/share/icon-weixin.png" alt=""></i>微信好友
+                </li>
+                <li class="bui-btn">
+                    <i class="icon"><img src="images/share/icon-pyq.png" alt=""></i>朋友圈
+                </li>
+                <li class="bui-btn">
+                    <i class="icon"><img src="images/share/icon-qq.png" alt=""></i>QQ好友
+                </li>
+                <li class="bui-btn">
+                    <i class="icon"><img src="images/share/icon-copy.png" alt=""></i>复制链接
+                </li>
+            </ul>
+        </div>
+    </main>
+    <footer>
+        <!-- 底部内容 -->
+        <div class="bui-input news-comment">
+            <textarea class="comment-textarea" id="commentText" type="text" placeholder="写跟帖"></textarea>
+            <span class="all-comments"><i class="icon-comment">&#xe632;</i>1233</span>
+            <span class="share"><i class="icon-share"></i></span>
+            <span class="send" style="display: none;">发送</span>
+        </div>
+    </footer>
+</div>

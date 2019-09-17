@@ -47,3 +47,16 @@ header.bui-bar .bui-bar-right img {
     color: #ea413c;
     background: #fff;
 }
+
+.bui-tab .bui-nav .active {
+    color: #ea413c;
+    background-color: #fff;
+}
+
+.bui-nav>[class*=bui-btn].active:after {
+    background: #ea413c;
+}
+
+h3.item-title{
+    color:#666;
+}
