@@ -256,6 +256,18 @@ function showImages(index){
         autoheight:true,
         autopage: true,
         data: imgData,
+        onBeforeTo:function(e){
+            // currentIndex
+            console.log($("#slide li")[0])
+            let targetEle= $("#slide li")[e.currentIndex];
+            let eleImg = $(targetEle).find("img");
+            // let ele = ele.parent().parent();
+            // console.log(e)
+            let margin = ($(targetEle).height() - eleImg.height()) * 0.5;
+            console.log( $(targetEle).height() ,eleImg.height())
+            $(targetEle).css("margin", margin + " 0")
+
+        }
     })
 
     // 因为slide叠在mask上面,所以需要另外绑定事件
