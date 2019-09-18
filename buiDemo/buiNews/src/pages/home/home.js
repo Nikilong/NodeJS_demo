@@ -1,6 +1,6 @@
 /**
  * 首页模块
- * 默认模块名: main
+ * 默认模块名: home
  * @return {[object]}  [ 返回一个对象 ]
  */
 loader.define(["main"],function(require, exports, module) {
@@ -44,14 +44,14 @@ loader.define(["main"],function(require, exports, module) {
                 var html ="";
                 // 渲染菜单结构
                 html +=`<div class="bui-tab-head"><ul id="nav" class="bui-nav">`;
-                channelConfig.forEach(function (item,i) {
+                G_channelConfig.forEach(function (item,i) {
                     html +=`<li class="bui-btn" href="pages/home-tab/home-tab${i+1}.html?id=${item.id}">${item.name}</li>`;
                 })
                 
                 html +=`</ul></div>`;
                 // 渲染内容结构
                 html +=`<div class="bui-tab-main"><ul class="bui-nav">`;
-                channelConfig.forEach(function (item,i) {
+                G_channelConfig.forEach(function (item,i) {
                     html +=`<li class="bui-btn"></li>`;
                 })
                 html +=`</ul></div>`;
@@ -68,7 +68,7 @@ loader.define(["main"],function(require, exports, module) {
             // document.getElementById("nav").scrollLeft = left;
             
             loader.require(["pages/home-tab/home-tab"+(index+1)])
-            currendChannelIndex = index;
+            G_currendChannelIndex = index;
         }).to(0);
 
     }

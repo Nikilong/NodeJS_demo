@@ -1,8 +1,9 @@
 // 后台服务器地址
-var baseUrl =  "http://120.78.165.47:4001/servers";
-// var baseUrl = "http://localhost:4001/servers";
-var currendChannelIndex = 0;
-var channelConfig = [
+var G_baseUrl =  "http://120.78.165.47:4001/servers";
+// var G_baseUrl = "http://localhost:4001/servers";\
+var G_newsData = [];
+var G_currendChannelIndex = 0;
+var G_channelConfig = [
     {"name":"推荐","id":"100"},
     {"name":"热点","id":"51830095"},
     {"name":"视频","id":"10016","isVideo":true},
@@ -38,9 +39,16 @@ var channelConfig = [
     // {"name":"故事","id":"10430"},
 ];
 
+G_channelConfig.forEach(()=>{
+    G_newsData.push([]);
+})
+
+
+var G_effDataTemp = [];  // 临时保存加载的数据
+
 var common = {
     getNewsByChannel:function (channelId) {
-        console.log(currendChannelIndex,"++++",channelId)
+        console.log(G_currendChannelIndex,"++++",channelId)
         var slideHeight = $(window).height() - $(".bui-bar-side").height() - $("#uiNewsTabNav").height();
 
         // 计算列表的高度
@@ -48,10 +56,10 @@ var common = {
 
         return bui.list({
             id: "#uiScroll",
-            url: baseUrl,
+            url: G_baseUrl,
             data: {
                 HEADER: {},
-				PARAMS: {id:channelConfig[currendChannelIndex]["id"]},
+				PARAMS: {id:G_channelConfig[G_currendChannelIndex]["id"]},
 				SERVICE: "NewsService.getNewsByChannel"
             },//接口请求的参数
             // 可选参数
@@ -67,15 +75,24 @@ var common = {
                         filter = false;
                     }
                     if(filter){
+                        G_newsData[G_currendChannelIndex].push(el);
+                        let finalIndex = G_newsData[G_currendChannelIndex].length - 1;  // 记录数据索引
                         // console.log(el);
-                        if(channelConfig[currendChannelIndex]["isVideo"]){  //视频
+                        if(G_channelConfig[G_currendChannelIndex]["isVideo"]){  //视频
                             // <iframe data-url="${el.id}"></iframe>
+                            let imgURL = "";
+                            try{
+                                imgURL = el.videos[0].poster.url ? el.videos[0].poster.url : el.thumbnails[0].url;
+                            }catch(e){
+                                imgURL = "";
+                                console.log(e);
+                            }
                             html += `
                                 <li class="bui-btn bui-box-align-top" href="pages/detail/detail.html?id=${el.id}">    
                                     <div class="span1">      
                                         <div class="bui-box-space container-full">
                                             <div class="span1 video-content">
-                                                <div class="bui-pic"><img src="${el.videos[0].poster.url}" alt=""></div>
+                                                <div class="bui-pic" onclick="showImages(${finalIndex})"><img src="${imgURL}" alt=""></div>
                                             </div>
                                         </div>  
                                         <h3 class="item-title">${el.title}</h3>        
@@ -94,13 +111,13 @@ var common = {
                                     <div class="span1">
                                         <div class="bui-box-space container-full">
                                             <div class="span1">
-                                                <div class="bui-pic"><img src="${el.thumbnails[0].url}" alt=""></div>
+                                                <div class="bui-pic" onclick="showImages(${finalIndex})"><img src="${el.thumbnails[0].url}" alt=""></div>
                                             </div>
                                             <div class="span1">
-                                                <div class="bui-pic"><img src="${el.thumbnails[1].url}" alt=""></div>
+                                                <div class="bui-pic" onclick="showImages(${finalIndex})"><img src="${el.thumbnails[1].url}" alt=""></div>
                                             </div>
                                             <div class="span1">
-                                                <div class="bui-pic"><img src="${el.thumbnails[2].url}" alt=""></div>
+                                                <div class="bui-pic" onclick="showImages(${finalIndex})"><img src="${el.thumbnails[2].url}" alt=""></div>
                                             </div>
                                         </div>
                                         <h3 class="item-title">${el.title}</h3>        
@@ -145,7 +162,9 @@ var common = {
                         }
                     }
                 });
-    
+
+                
+                
                 return html;
             },
             height: listHeight,
@@ -157,12 +176,12 @@ var common = {
                 size: "pageSize",    // 页数字段
                 data: "RESULT"         // 数据
             },
-            onRefresh: function (scroll,data) {
+            onRefresh: function (scroll,data) {  // 顶部下拉刷新时触发
                 // var firstObj = data[0];
                 // // 刷新的时候,通过第一条id去获取最新10条数据
                 // uiList.option(data,{"lastid":firstObj.Id})
             },
-            onLoad: function (scroll,data) {
+            onLoad: function (scroll,data) {  // 首次加载和底部上拉刷新时触发
                 // 自定义渲染
                 // $(".video-content").on("click",function(e){
                 //     // debugger
@@ -200,9 +219,50 @@ var common = {
             PARAMS: {id:id},
             SERVICE: "NewsService.getNewsDetail"
         };
-        $.post(baseUrl,params,function(result){
+        $.post(G_baseUrl,params,function(result){
             callback && callback(result)
         });
         
     },
+}
+
+
+// 打开图片浏览器
+function showImages(index){
+    // 停止冒泡,防止打开链接
+    var event = window.event || arguments.callee.caller.arguments[0]
+    event.preventDefault();
+    event.stopPropagation();
+
+    // 提取照片组
+    let imgs = G_newsData[G_currendChannelIndex][index]["images"];
+    let imgData = [];
+    imgs.forEach((item)=>{
+        imgData.push({"image":item.url});
+    })
+
+    // 自定义居中弹出框
+    var uiDialog = bui.dialog({
+        id: "#dialogCenter",
+        fullscreen:true,
+        onMask: function() {
+            console.log("444")
+        }
+    });
+
+    // 图片浏览器
+    var uiSlide = bui.slide({
+        id: "#slide",
+        autoheight:true,
+        autopage: true,
+        data: imgData,
+    })
+
+    // 因为slide叠在mask上面,所以需要另外绑定事件
+    $("#sliderMain").on("click",function(){
+        uiDialog.close();
+    })
+
+    uiDialog.open();
+
 }

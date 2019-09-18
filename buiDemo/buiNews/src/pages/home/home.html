@@ -7,12 +7,32 @@
 /* #nav li{
   width:3rem;
 } */
+
+#slide{
+  /* 垂直居中 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
 </style>
 
 <!-- 这里还是一个标准的BUI页面 -->
 <!-- <div class="tab-home"> -->
   <div class="bui-page" id="newsPage">
     <header class="bui-bar bui-bar-side">
+      <div class="bui-bar-left">
+      </div>
+      <div class="bui-bar-main"><img class="logo-pic" src="images/home/logo.png"/></div>
+      <div class="bui-bar-right">
+          <!-- 右边图片 -->
+          <a class="bui-btn search" id="search">
+              <img src="images/home/search.png"/>
+          </a>
+          <!-- 右边图片 -->
+          <a class="bui-btn live">
+              <img src="images/home/live.png"/>
+          </a>
+      </div>
     </header>
     <main>
       <!-- <div id="uiTab"></div> -->
@@ -20,3 +40,11 @@
     </main>
   </div>
 <!-- </div> -->
+
+<!-- 中间自定义弹出框结构	 -->
+<div id="dialogCenter" class="bui-dialog" style="display: none;background: transparent;">
+    <div class="bui-dialog-main" id="sliderMain">
+        <div id="slide" class="bui-slide bui-slide-skin01"></div>
+    </div>
+    <div class="bui-dialog-close"><i class="icon-close"></i></div>
+</div>
