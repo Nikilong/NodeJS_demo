@@ -69,7 +69,7 @@ loader.define(["main"],function(require, exports, module) {
             
             loader.require(["pages/home-tab/home-tab"+(index+1)])
             currendChannelIndex = index;
-        }).to(2);
+        }).to(0);
 
     }
 

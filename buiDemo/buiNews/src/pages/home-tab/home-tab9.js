@@ -1,5 +1,5 @@
 /**
- * [视频列表模块]
+ * [新闻列表模块]
  */
 loader.define(function(require,exports,module) {
     var pageview = {};
@@ -9,9 +9,8 @@ loader.define(function(require,exports,module) {
         bui.getPageParams().done(function(result){
             console.log(result)
             // 初始化列表
-            common.getNewsByChannel()
+            common.getNewsByChannel(result.id)
         })
-
     }
 
     // 初始化
