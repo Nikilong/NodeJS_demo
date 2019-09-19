@@ -1,6 +1,6 @@
 // 后台服务器地址
 var G_baseUrl =  "http://120.78.165.47:4001/servers";
-// var G_baseUrl = "http://localhost:4001/servers";\
+// var G_baseUrl = "http://localhost:4001/servers";
 var G_newsData = [];
 var G_currendChannelIndex = 0;
 var G_channelConfig = [
@@ -19,36 +19,33 @@ var G_channelConfig = [
     {"name":"历史","id":"701104723"},
     {"name":"数码","id":"835729"},
     {"name":"广州","id":"200"},
-    // {"name":"美食","id":"10000"},
-    // {"name":"综艺","id":"10465"},
-    // {"name":"电影","id":"1404457531635"},
-    // {"name":"动漫","id":"10012"},
-    // {"name":"足球","id":"794794774"},
-    // {"name":"英超","id":"10469"},
-    // {"name":"NBA","id":"10306"},
-    // {"name":"图片","id":"1964289243"},
-    // {"name":"情感","id":"1099189934"},
-    // {"name":"股票","id":"90001"},
-    // {"name":"健康","id":"472933935"},
-    // {"name":"星座","id":"10008"},
-    // {"name":"房产","id":"586710362"},
-    // {"name":"商业","id":"696724"},
-    // {"name":"旅游","id":"1972619079"},
-    // {"name":"家居","id":"586710362"},
-    // {"name":"音乐","id":"10022"},
-    // {"name":"故事","id":"10430"},
+    {"name":"美食","id":"10000"},
+    {"name":"综艺","id":"10465"},
+    {"name":"电影","id":"1404457531635"},
+    {"name":"动漫","id":"10012"},
+    {"name":"足球","id":"794794774"},
+    {"name":"英超","id":"10469"},
+    {"name":"NBA","id":"10306"},
+    {"name":"图片","id":"1964289243"},
+    {"name":"情感","id":"1099189934"},
+    {"name":"股票","id":"90001"},
+    {"name":"健康","id":"472933935"},
+    {"name":"星座","id":"10008"},
+    {"name":"房产","id":"586710362"},
+    {"name":"商业","id":"696724"},
+    {"name":"旅游","id":"1972619079"},
+    {"name":"家居","id":"586710362"},
+    {"name":"音乐","id":"10022"},
+    {"name":"故事","id":"10430"},
 ];
 
 G_channelConfig.forEach(()=>{
     G_newsData.push([]);
 })
 
-
-var G_effDataTemp = [];  // 临时保存加载的数据
-
 var common = {
     getNewsByChannel:function (channelId) {
-        console.log(G_currendChannelIndex,"++++",channelId)
+        console.log(G_currendChannelIndex,"++++",G_channelConfig[G_currendChannelIndex]["id"])
         var slideHeight = $(window).height() - $(".bui-bar-side").height() - $("#uiNewsTabNav").height();
 
         // 计算列表的高度
@@ -262,7 +259,7 @@ function showImages(index){
     event.stopPropagation();
 
     // 提取照片组
-    let imgs = G_newsData[G_currendChannelIndex][index]["images"];
+    let imgs = G_newsData[G_currendChannelIndex][index]["images"] || G_newsData[G_currendChannelIndex][index]["thumbnails"];
     if (imgs.length > 0){
 
         let imgData = [];
