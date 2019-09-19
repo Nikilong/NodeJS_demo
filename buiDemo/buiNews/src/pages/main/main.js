@@ -36,7 +36,7 @@ loader.define(function(require, exports, module) {
             console.log(index, "channel----")
             // 有滚动条时在居中显示
             var itemwidth = $("#nav li").eq(index).prev().width();
-            var left = $("#nav li")[index].offsetLeft - itemwidth*4;   // 最多显示8个,因此为减去4个块的宽度
+            var left = $("#nav li")[index].offsetLeft - $(window).width() * 0.5 + itemwidth * 0.5;   // 居中显示,需要减去屏幕宽度以及0.5个块的宽度
             document.getElementById("uiNavbar").scrollLeft = left;
 
             loader.require(["pages/home-tab/home-tab"+(index+1)])
