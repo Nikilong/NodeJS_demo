@@ -60,3 +60,69 @@ header.bui-bar .bui-bar-right img {
 h3.item-title{
     color:#666;
 }
+
+/* .bui-page img {
+    max-width: 80%;
+    margin: auto 10%;
+} */
+
+/* 视频列表---start */
+.v-mask {
+    background-image: linear-gradient(rgba(28, 27, 25, 0) 5%, rgba(28, 27, 25, 0.52) 37%, rgba(28, 27, 25, 0.85) 85%);
+    background-color: initial;
+}
+.v-content{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 10px;
+}
+
+.v-play {
+    width: 1rem;
+    height: .5rem;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAAoCAYAAABD0IyuAAACQElEQVR4Ae2aNbDbQBCG5WDnLlS6D3OaMENnqNyPe0Npd2FqHjVhqh+4CjMzMzMzbn7NbPjMPt9KuX/m68+fJEsLTjWhESOCYDJIg2bQBXaAI4bZwWdp5rNNAUFHZ1jIOLAE7ANHPMI+sJTPHqi3kMFgLTjicdaCwfUQ0gtkwGFwxCcc5t/Uq1op/cBGcMSnbAT9KpUSAp3giM/pBKFypfTlf/Yj/wldoG85/yl6Hp/Zs0/S9u1PwFOKx88KfKx6FROTBke00NZ2mzj08uUnWrnyJo0cKUlOupCUQVrfPps23aO/s2/fM4pETgt6Ww3+W0pA+3fKhg0Qo8jTpx9pwYLrQuSsVn3RHjEihkPbtj2hefNOCpAz5ncxS8yK4dy//4Gy2SuGxSz5vSDcb06MIp2dj2jatBMmxLCLoMMV6BE5Yjg3b76jVOqSITlTXDEpeWI4X758oy1b7tOECccaLCblimmRJUaRixffUCJxoYFiWlwxnbLFcN6//0Jr1tylsWOPNuC8Ha6YnXLFKHLy5CuKRnV/FO50xRzxkhiW81L3ea2YAnjzUYrFtD9K9s9XTYc3XteXLhl4XdsPPBVpWxKomVKoiLRFpLi2Qy531XzbQVKjavt2YY0q863NT7RwoZTW5hrlfNpIMzwaldoMt+MTJlNsrtRb+8Btxw6pA7feSil2RFtG7FDfroEMKG7BLg7VtGq2xgdS1oDBOpYTx4ClHltO3M9nHuvoDheeU0AatIA82ClAwi4+S0ut66zfAYxMiV8+FoEhAAAAAElFTkSuQmCC");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: initial;
+}
+
+.v-detail{
+    color: rgb(191, 181, 161);
+}
+.v-time{
+    color: rgb(191, 181, 161);
+}
+
+.v-time::before {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAAmElEQVR4AWOY+Z86cDAaRDEcAQZ1gCBOReUgSIxBUAq/omFq0KhBowbFUG7QKqj82pli5BmEgBEz34JVvJ4ZSp5BCCg5cwtU1fKZQuQZhIBpMz+B1T2b6U2eQQioOPMAVO2cmXzkGISATDMLZ34Hq34w04E8gxBQa+ZpsPo4cg1CQJaZdTNXUeY1BGSkyCBKE+SoQcO4oQUAHo7GDVZrXx0AAAAASUVORK5CYII=);
+    background-repeat:no-repeat;
+    background-color: initial;
+    display: inline-block;
+    content: "";
+    height: 0.26rem;
+    width: 0.26rem;
+    -webkit-background-size: contain;
+    background-size: contain;
+    padding-right: 0.1rem;
+    position: relative;
+    top: 0.02rem;
+}
+
+.v-right{
+    text-align: right !important;
+}
+
+.v-title{
+    padding: 5px 0;
+    color: rgb(254, 243, 225);
+    font-size: 0.37rem;
+    color: #fff;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    -webkit-line-break: auto;
+    -webkit-box-orient: vertical;
+}
+/* 视频列表---end */

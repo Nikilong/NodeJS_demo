@@ -9,38 +9,71 @@ loader.define(function(require, exports, module) {
 
     // 模块初始化定义
     pageview.init = function() {
-        //按钮在tab外层,需要传id
-        var tab = bui.tab({
-            id: "#tabDynamic",
-            menu: "#tabDynamicNav",
-            // 1: 声明是动态加载模块的tab, 菜单那里会有href 
-            autoload: true,
-        })
+        // // 初始化新闻页的main的高度,需要减去最外层的公用footer;
+        // var newspageMainHeight = bui.init({
+        //     id:"#newsPage",
+        //     footer:"#tabDynamicNav"
+        // });
+
+        // let barHtml = "";
+        // channelConfig.forEach(function (item,i) {
+        //     barHtml +=`<li class="bui-btn" href="pages/home-tab/home-tab${i+1}.html?id=${item.id}">${item.name}</li>`;
+        // })
+
+        // let tabHtml = "";
+        // channelConfig.forEach(function (item,i) {
+        //     tabHtml +=`<li class="bui-btn"></li>`;
+        // })
+
+        // $("#tabMain").html(tabHtml);
+        // $("#nav").html(barHtml);
+
+        // var uiTab = bui.tab({
+        //     id:"#uiTabNavbar",
+        //     menu:"#nav",
+        //     autoload:true,
+        //     // scroll:false,
+        // });
+
+        // 先初始化
+        var uiTab = bui.tab({
+            id:"#uiTab",
+            // 1: 声明是动态加载的tab
+            autoload:true,
+            template: function (data) {
+                var html ="";
+                // 渲染菜单结构
+                html +=`<div class="bui-tab-head"><ul id="nav" class="bui-nav">`;
+                G_channelConfig.forEach(function (item,i) {
+                    html +=`<li class="bui-btn" href="pages/home-tab/home-tab${i+1}.html?id=${item.id}">${item.name}</li>`;
+                })
+                
+                html +=`</ul></div>`;
+                // 渲染内容结构
+                html +=`<div class="bui-tab-main"><ul class="bui-nav">`;
+                G_channelConfig.forEach(function (item,i) {
+                    html +=`<li class="bui-btn"></li>`;
+                })
+                html +=`</ul></div>`;
+                return html;
+            }
+        });
 
         // 2: 监听加载后的事件
-        tab.on("to", function(index) {
+        uiTab.on("to", function(index) {
             console.log(index, "parent")
-            switch (index) {
-                case 0:
-                    loader.require(["pages/home/home"], function(mod) {
-                        // 有回调的话是每次切换都会触发
-                        mod.init();
-                    })
-                    break;
-                case 1:
-                    // 这里是加载脚本第一次的时候触发
-                    loader.require(["pages/ui_controls/bui.tab_dynamic_page2"])
-                    break;
-                case 2:
-                    loader.require(["pages/ui_controls/bui.tab_dynamic_page1"])
-                    break;
-                case 3:
-                    loader.require(["pages/ui_controls/bui.tab_dynamic_page1"])
-                    break;
-            }
-        }).to(0);
+            // 有滚动条时在居中显示
+            // var itemwidth = $("#uiTab li").eq(index).prev().width();
+            // var left = $("#uiTab li")[index].offsetLeft - itemwidth*2;
+            // document.getElementById("nav").scrollLeft = left;
+            
+            loader.require(["pages/home-tab/home-tab"+(index+1)])
+            G_currendChannelIndex = index;
+        }).to(2);
 
     }
+
+    
 
     // 初始化
     pageview.init();

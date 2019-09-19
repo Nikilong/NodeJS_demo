@@ -80,27 +80,55 @@ var common = {
                         // console.log(el);
                         if(G_channelConfig[G_currendChannelIndex]["isVideo"]){  //视频
                             // <iframe data-url="${el.id}"></iframe>
-                            let imgURL = "";
+                            let imgURL = "",timeL= "";
                             try{
+                                // 封面
                                 imgURL = el.videos[0].poster.url ? el.videos[0].poster.url : el.thumbnails[0].url;
+
+                                // 时长
+                                if(el.content_length >= 60000){
+                                    let mimiC = parseInt(el.content_length / 60000 );
+                                    timeL = mimiC + "\"" + parseInt((el.content_length - 60000 * mimiC) / 1000);
+                                }else{
+                                    timeL = "0\"" + parseInt(el.content_length  / 1000);
+                                }
+
                             }catch(e){
                                 imgURL = "";
                                 console.log(e);
                             }
+
+                            // 时长 content_length: 70000
                             html += `
                                 <li class="bui-btn bui-box-align-top" href="pages/detail/detail.html?id=${el.id}">    
                                     <div class="span1">      
                                         <div class="bui-box-space container-full">
                                             <div class="span1 video-content">
-                                                <div class="bui-pic" onclick="showImages(${finalIndex})"><img src="${imgURL}" alt=""></div>
+                                                <div class="bui-pic v-mask">
+                                                    <img src="${imgURL}" alt="">
+                                                    <div class="v-content v-mask">
+                                                        <div class="item-text bui-box">            
+                                                            <div class="span1">
+                                                                <div class="v-play"></div>            
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-text bui-box">            
+                                                            <div class="span1">
+                                                                <div class="v-title">${el.title}</div>        
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-text bui-box">            
+                                                            <div class="span1">
+                                                                <span class="v-detail">${el.source_name}</span>
+                                                            </div>
+                                                            <div class="span1  v-right">
+                                                                <span class="v-time">${timeL}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>  
-                                        <h3 class="item-title">${el.title}</h3>        
-                                        <div class="item-text bui-box">            
-                                            <div class="span1"><span class="cate">${el.source_name}</span></div>
-                                            <span class="stick">${el.article_like_cnt}点赞&nbsp;&nbsp;</span>  
-                                            <span class="stick">${el.cmt_cnt}评论</span>  
-                                        </div>
                                     </div>
                                 </li>
                             `;
@@ -236,45 +264,57 @@ function showImages(index){
 
     // 提取照片组
     let imgs = G_newsData[G_currendChannelIndex][index]["images"];
-    let imgData = [];
-    imgs.forEach((item)=>{
-        imgData.push({"image":item.url});
-    })
+    if (imgs.length > 0){
 
-    // 自定义居中弹出框
-    var uiDialog = bui.dialog({
-        id: "#dialogCenter",
-        fullscreen:true,
-        onMask: function() {
-            console.log("444")
-        }
-    });
-
-    // 图片浏览器
-    var uiSlide = bui.slide({
-        id: "#slide",
-        autoheight:true,
-        autopage: true,
-        data: imgData,
-        onBeforeTo:function(e){
-            // currentIndex
-            console.log($("#slide li")[0])
-            let targetEle= $("#slide li")[e.currentIndex];
-            let eleImg = $(targetEle).find("img");
-            // let ele = ele.parent().parent();
-            // console.log(e)
-            let margin = ($(targetEle).height() - eleImg.height()) * 0.5;
-            console.log( $(targetEle).height() ,eleImg.height())
-            $(targetEle).css("margin", margin + " 0")
-
-        }
-    })
-
-    // 因为slide叠在mask上面,所以需要另外绑定事件
-    $("#sliderMain").on("click",function(){
-        uiDialog.close();
-    })
-
-    uiDialog.open();
+        let imgData = [];
+        let maxH = 0;
+        let windowW = $(window).width();
+        let tempH = 0;
+        imgs.forEach((item)=>{
+            tempH = item.height / item.width  * windowW;
+            maxH = tempH > maxH ? tempH : maxH;
+            imgData.push({"image":item.url,"width":windowW,"height":tempH});
+        })
+    
+        // 自定义居中弹出框
+        var uiDialog = bui.dialog({
+            id: "#dialogCenter",
+            fullscreen:true,
+            onMask: function() {
+                console.log("444")
+            }
+        });
+    
+        // 图片浏览器
+        var uiSlide = bui.slide({
+            id: "#slide",
+            autoheight:true,
+            autopage: true,
+            data: imgData,
+            onBeforeTo:function(e){
+                try{
+                    // currentIndex
+                    // console.log($("#slide li")[e.currentIndex])
+                    let targetEle= $("#slide li")[e.currentIndex];
+                    // let eleImg = $(targetEle).find("img");
+                    // let ele = ele.parent().parent();
+                    // console.log(e)
+                    let item = imgData[e.currentIndex];
+                    let margin = ( maxH - item.height) * 0.5;
+                    console.log( e.currentIndex,maxH ,item.height ,margin)
+                    console.log($(targetEle).find("img")[0])
+                    $($(targetEle).find("img")[0]).css("margin", margin + " 0")
+                }catch(e){console.log(e)}
+    
+            }
+        })
+    
+        // 因为slide叠在mask上面,所以需要另外绑定事件
+        $("#sliderMain").on("click",function(){
+            uiDialog.close();
+        })
+    
+        uiDialog.open();
+    }
 
 }
