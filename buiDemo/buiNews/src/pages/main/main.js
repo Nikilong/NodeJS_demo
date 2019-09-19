@@ -69,6 +69,7 @@ loader.define(function(require, exports, module) {
         // 弹出按钮的事件绑定
         $("#moreChannelBtn").on("click",function(){
             uiDialogNav.open();
+            $("#channelDialog").find("input").eq(G_currendChannelIndex).attr("checked",true);
         });
 
         // (弹出界面)选择了频道的事件绑定
