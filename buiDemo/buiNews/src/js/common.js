@@ -55,7 +55,7 @@ var common = {
         var listHeight = slideHeight - $("#uiSlideNavbar").height() ;
 
         return bui.list({
-            id: "#uiScroll",
+            id: "#uiScroll"+(G_currendChannelIndex+1),
             url: G_baseUrl,
             data: {
                 HEADER: {},
@@ -98,7 +98,6 @@ var common = {
                                 console.log(e);
                             }
 
-                            // 时长 content_length: 70000
                             html += `
                                 <li class="bui-btn bui-box-align-top" href="pages/detail/detail.html?id=${el.id}">    
                                     <div class="span1">      
