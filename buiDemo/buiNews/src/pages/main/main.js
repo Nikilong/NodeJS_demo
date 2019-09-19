@@ -15,61 +15,32 @@ loader.define(function(require, exports, module) {
         //     footer:"#tabDynamicNav"
         // });
 
-        // let barHtml = "";
-        // channelConfig.forEach(function (item,i) {
-        //     barHtml +=`<li class="bui-btn" href="pages/home-tab/home-tab${i+1}.html?id=${item.id}">${item.name}</li>`;
-        // })
-
-        // let tabHtml = "";
-        // channelConfig.forEach(function (item,i) {
-        //     tabHtml +=`<li class="bui-btn"></li>`;
-        // })
-
-        // $("#tabMain").html(tabHtml);
-        // $("#nav").html(barHtml);
-
-        // var uiTab = bui.tab({
-        //     id:"#uiTabNavbar",
-        //     menu:"#nav",
-        //     autoload:true,
-        //     // scroll:false,
-        // });
+        // 绑定顶部的tab的名称的href
+        $("#nav").find("li").forEach((ele,index) => {
+            $(ele).text(G_channelConfig[index]["name"]);
+            $(ele).attr("href",`pages/home-tab/home-tab${index+1}.html?id=${G_channelConfig[index]["id"]}`);
+        });
 
         // 先初始化
         var uiTab = bui.tab({
-            id:"#uiTab",
+            id:"#uiTabNavbar",
+            menu:"#nav",
             // 1: 声明是动态加载的tab
             autoload:true,
-            template: function (data) {
-                var html ="";
-                // 渲染菜单结构
-                html +=`<div class="bui-tab-head"><ul id="nav" class="bui-nav">`;
-                G_channelConfig.forEach(function (item,i) {
-                    html +=`<li class="bui-btn" href="pages/home-tab/home-tab${i+1}.html?id=${item.id}">${item.name}</li>`;
-                })
-                
-                html +=`</ul></div>`;
-                // 渲染内容结构
-                html +=`<div class="bui-tab-main"><ul class="bui-nav">`;
-                G_channelConfig.forEach(function (item,i) {
-                    html +=`<li class="bui-btn"></li>`;
-                })
-                html +=`</ul></div>`;
-                return html;
-            }
+            // scroll:false,
         });
 
         // 2: 监听加载后的事件
         uiTab.on("to", function(index) {
             console.log(index, "parent")
             // 有滚动条时在居中显示
-            // var itemwidth = $("#uiTab li").eq(index).prev().width();
-            // var left = $("#uiTab li")[index].offsetLeft - itemwidth*2;
-            // document.getElementById("nav").scrollLeft = left;
-            
+            var itemwidth = $("#nav li").eq(index).prev().width();
+            var left = $("#nav li")[index].offsetLeft - itemwidth*4;   // 最多显示8个,因此为减去4个块的宽度
+            document.getElementById("uiNavbar").scrollLeft = left;
+
             loader.require(["pages/home-tab/home-tab"+(index+1)])
             G_currendChannelIndex = index;
-        }).to(2);
+        }).to(0);
 
     }
 
