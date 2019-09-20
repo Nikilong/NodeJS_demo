@@ -34,6 +34,9 @@
 
 
 /*示例样式, 可以删掉 end*/
+.bui-router-item{
+    background:#fff;
+}
 header.bui-bar {background: #ea413c;}
 header.bui-bar .logo-pic {
     height: .3rem;
