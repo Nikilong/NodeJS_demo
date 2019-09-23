@@ -26,12 +26,6 @@ loader.define(function(require,exports,module) {
           hideSend();
       })
 
-      // 返回按钮
-      $(".btn-back").on("click",function(){
-        // window.history.back("-1");
-        bui.back();
-      });
-    
       // 分享按钮
       $('.share').on("click",function (argument) {
         dialog.open();
