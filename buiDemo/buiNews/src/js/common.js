@@ -325,6 +325,61 @@ function showImages(index){
             uiDialog.close();
         })
 
+        // 下载图片
+        $("#downloadPicBtn").on("click",function(e){
+            let item = imgs[uiSlide.index()];
+            console.log(item)
+
+
+            var imgEle = $(".bui-slide-img").get(uiSlide.index()); //将jQuery对象转换为dom对象
+            console.log(imgEle)
+            html2canvas(imgEle).then(canvas => {
+            // html2canvas(document.getElementById("newsPage")).then(canvas => {
+                                var imgUrl = canvas.toDataURL("image/png"); // 将canvas转换成img的src流
+                  console.log("base64编码数据：", imgUrl);
+                // // canvas.toBlob(function(blob) {
+                // //     saveAs(blob, "hangge.png");
+                // //  });
+                //         var imgUrl = canvas.toDataURL("image/png"); // 将canvas转换成img的src流
+                //     //   console.log("base64编码数据：", imgUrl);
+                    let tempImg = document.createElement("img");
+                    tempImg.src = imgUrl;
+                    tempImg.id = "ttt"
+                    tempImg.style.zIndex = "99999"
+                    // tempImg.style.width = "100px";
+                    // tempImg.style.height = "100px";
+                    document.body.appendChild(tempImg);
+                //     html2canvas(document.getElementById("ttt")).then(can => {
+    
+                //         can.toBlob(function(blob) {
+                //             saveAs(blob, "hangge.png");
+                //          });
+                //     })
+            });
+            // html2canvas(imgEle, {
+            //     backgroundColor: null,
+            //     //allowTaint: true,
+            //     useCORS: true,
+            //     onrendered: function(canvas) {
+            //         // var url = canvas.toDataURL();//图片地址
+            //         // document.body.appendChild(canvas);
+
+            //         canvas.toBlob(function(blob) {
+            //             saveAs(blob, "hangge.png");
+            //          });
+            //     },
+            // })
+            // html2canvas(imgEle, {
+            //     onrendered: function(canvas) {
+            //         var url = canvas.toDataURL();//图片地址
+            //         document.body.appendChild(canvas);
+            //     },
+            //   width: 300,
+            //   height: 300
+            // });
+
+        })
+
         $("#scrollTotopBtn").hide();
     
         uiDialog.open();

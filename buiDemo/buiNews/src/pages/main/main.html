@@ -22,6 +22,21 @@
   bottom:1rem
   ;z-index: 99;
 }
+
+.bui-dialog .bui-dialog-download {
+    position: absolute;
+    top: .1rem;
+    right: 1rem;
+    height: .6rem;
+    line-height: .6rem;
+    text-align: right;
+    z-index: 102;
+}
+
+.bui-dialog .bui-dialog-download i {
+    font-size: .48rem;
+    color: #999;
+}
 </style>
 
 <!-- 这里还是一个标准的BUI页面 -->
@@ -143,6 +158,7 @@
         <div id="slide" class="bui-slide bui-slide-skin01"></div>
     </div>
     <div class="bui-dialog-close"><i class="icon-close"></i></div>
+    <div class="bui-dialog-download" id="downloadPicBtn"><i class="icon iconfont">&#xe666;</i></div>
 </div>
 
 <!-- 栏目对话框 -->
