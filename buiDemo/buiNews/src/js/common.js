@@ -307,19 +307,16 @@ function showImages(index){
             autoheight:true,
             autopage: true,
             data: imgData,
-            onBeforeTo:function(e){
+            onBeforeTo:function(e){},
+            onInited:function(e){
                 try{
-                    // currentIndex
-                    // console.log($("#slide li")[e.currentIndex])
-                    let targetEle= $("#slide li")[e.currentIndex];
-                    // let eleImg = $(targetEle).find("img");
-                    // let ele = ele.parent().parent();
-                    // console.log(e)
-                    let item = imgData[e.currentIndex];
-                    let margin = ( maxH - item.height) * 0.5;
-                    console.log( e.currentIndex,maxH ,item.height ,margin)
-                    console.log($(targetEle).find("img")[0])
-                    $($(targetEle).find("img")[0]).css("margin", margin + " 0")
+                    // 相片垂直居中显示(根据图片与最大图片的高度相比而调整margin)
+                    let targetEle= $("#slide li");
+                    targetEle.forEach((item,index)=>{
+                        let data = imgData[index];
+                        let margin = ( maxH - data.height) * 0.5;
+                        $(item).find("img")[0].style.margin = margin + "px 0";
+                    })
                 }catch(e){console.log(e)}
             }
         })
