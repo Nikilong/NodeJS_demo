@@ -83,6 +83,13 @@ loader.define(function(require, exports, module) {
                 uiTab.to(ele.attr("data-index"));
             }
         });
+        
+        // 回滚到顶部
+        $("#scrollTotopBtn").on("click",function(e){
+            let targetEle = $("#uiScroll"+(G_currendChannelIndex + 1))[0];
+            common.scrollAnimation(targetEle,targetEle.scrollTop,0);
+        })
+
 
     }
 

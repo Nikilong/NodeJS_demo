@@ -15,6 +15,13 @@
   transform: translate(-50%,-50%);
 }
 
+
+#main-float-tool{
+  position: fixed;
+  right:.5rem;
+  bottom:1rem
+  ;z-index: 99;
+}
 </style>
 
 <!-- 这里还是一个标准的BUI页面 -->
@@ -118,7 +125,15 @@
             </ul>
           </div>
       </div>
+
     </main>
+    <footer>
+      <div id="main-float-tool">
+        <div id="scrollTotopBtn">
+          <svg t="1569295474328" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1223" width="30" height="30"><path d="M512 0C230.4 0 0 230.4 0 512s230.4 512 512 512c281.6 0 512-230.4 512-512S793.6 0 512 0zM441.6 896 403.2 896l0-38.4 38.4 0L441.6 896zM441.6 832 403.2 832l0-38.4 38.4 0L441.6 832zM537.6 940.8 480 940.8l0-51.2 51.2 0L531.2 940.8zM537.6 864 480 864l0-51.2 51.2 0L531.2 864zM608 896 569.6 896l0-38.4 38.4 0L608 896zM608 832 569.6 832l0-38.4 38.4 0L608 832zM608 454.4l0 300.8L403.2 755.2 403.2 454.4 256 454.4l256-307.2 256 307.2L608 454.4z" p-id="1224" fill="#8a8a8a"></path></svg>
+        </div>
+      </div>
+    </footer>
   </div>
 </div>
 

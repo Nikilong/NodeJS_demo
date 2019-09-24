@@ -248,6 +248,24 @@ var common = {
         });
         
     },
+    // 滚动动画,targetEle: 需要滚动的元素  currentY:当前的scroll的值  target:最终滚动的位置
+    scrollAnimation:function(targetEle,currentY, targetY) {
+        // 计算需要移动的距离
+        let needScrollTop = targetY - currentY
+        let _currentY = currentY
+        setTimeout(() => {
+            // 一次调用滑动帧数，每次调用会不一样
+            const dist = Math.ceil(needScrollTop / 10)
+            _currentY += dist
+            targetEle.scrollTo(_currentY, currentY)
+                // 如果移动幅度小于十个像素，直接移动，否则递归调用，实现动画效果
+            if (needScrollTop > 10 || needScrollTop < -10) {
+                this.scrollAnimation(targetEle,_currentY, targetY)
+            } else {
+                targetEle.scrollTo(_currentY, targetY)
+            }
+        }, 1)
+    }
 }
 
 
@@ -277,7 +295,9 @@ function showImages(index){
             id: "#dialogCenter",
             fullscreen:true,
             onMask: function() {
-                console.log("444")
+            },
+            onBeforeClose: function(){
+                $("#scrollTotopBtn").show();
             }
         });
     
@@ -301,14 +321,14 @@ function showImages(index){
                     console.log($(targetEle).find("img")[0])
                     $($(targetEle).find("img")[0]).css("margin", margin + " 0")
                 }catch(e){console.log(e)}
-    
             }
         })
-    
         // 因为slide叠在mask上面,所以需要另外绑定事件
         $("#sliderMain").on("click",function(){
             uiDialog.close();
         })
+
+        $("#scrollTotopBtn").hide();
     
         uiDialog.open();
     }
