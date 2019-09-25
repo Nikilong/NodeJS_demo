@@ -248,6 +248,20 @@ var common = {
         });
         
     },
+
+    // 通过url获取base64编码,一般用于图片base64获取
+    getBase64ImageString:function (url,callback) {
+        console.log("getNewsDetail---")
+        let params = {
+            HEADER: {},
+            PARAMS: {url:url},
+            SERVICE: "NewsService.getBase64ImageString"
+        };
+        $.post(G_baseUrl,params,function(result){
+            callback && callback(result)
+        });
+        
+    },
     // 滚动动画,targetEle: 需要滚动的元素  currentY:当前的scroll的值  target:最终滚动的位置
     scrollAnimation:function(targetEle,currentY, targetY) {
         // 计算需要移动的距离
@@ -269,6 +283,7 @@ var common = {
 }
 
 
+var G_currentImgs = [];   // 当前的图片组
 // 打开图片浏览器
 function showImages(index){
     // 停止冒泡,防止打开链接
@@ -277,14 +292,15 @@ function showImages(index){
     event.stopPropagation();
 
     // 提取照片组
-    let imgs = G_newsData[G_currendChannelIndex][index]["images"] || G_newsData[G_currendChannelIndex][index]["thumbnails"];
-    if (imgs.length > 0){
+    G_currentImgs = [];
+    G_currentImgs = G_newsData[G_currendChannelIndex][index]["images"] || G_newsData[G_currendChannelIndex][index]["thumbnails"];
+    if (G_currentImgs.length > 0){
 
         let imgData = [];
         let maxH = 0;
         let windowW = $(window).width();
         let tempH = 0;
-        imgs.forEach((item)=>{
+        G_currentImgs.forEach((item)=>{
             tempH = item.height / item.width  * windowW;
             maxH = tempH > maxH ? tempH : maxH;
             imgData.push({"image":item.url,"width":windowW,"height":tempH});
@@ -298,6 +314,7 @@ function showImages(index){
             },
             onBeforeClose: function(){
                 $("#scrollTotopBtn").show();
+                $("#downloadPicBtn").off("click");
             }
         });
     
@@ -327,56 +344,128 @@ function showImages(index){
 
         // 下载图片
         $("#downloadPicBtn").on("click",function(e){
-            let item = imgs[uiSlide.index()];
+            let item = G_currentImgs[uiSlide.index()];
             console.log(item)
 
+            common.getBase64ImageString(item.url,function(result){
+                let imgType = "";
+                switch (item.type) {
+                    case "gif":
+                        imgType = "data:image/gif;base64,"
+                        break;
+                    case "png":
+                        imgType = "data:image/png;base64,"
+                        break;
+                    case "icon":
+                        imgType = "data:image/x-icon;base64,"
+                        break;
+                    default:
+                        imgType = "data:image/jpeg;base64,"
+                        break;
+                }
+                imgType = "data:image/jpeg;base64,";
+                let tempImg = document.createElement("img");
+                tempImg.src = imgType + JSON.parse(result).RESULT;
+                tempImg.id = "ttt"
 
-            var imgEle = $(".bui-slide-img").get(uiSlide.index()); //将jQuery对象转换为dom对象
-            console.log(imgEle)
-            html2canvas(imgEle).then(canvas => {
-            // html2canvas(document.getElementById("newsPage")).then(canvas => {
-                                var imgUrl = canvas.toDataURL("image/png"); // 将canvas转换成img的src流
-                  console.log("base64编码数据：", imgUrl);
-                // // canvas.toBlob(function(blob) {
-                // //     saveAs(blob, "hangge.png");
-                // //  });
-                //         var imgUrl = canvas.toDataURL("image/png"); // 将canvas转换成img的src流
-                //     //   console.log("base64编码数据：", imgUrl);
-                    let tempImg = document.createElement("img");
-                    tempImg.src = imgUrl;
-                    tempImg.id = "ttt"
-                    tempImg.style.zIndex = "99999"
+                // tempImg.style.position = "fixed";
+                // tempImg.style.top = "0";
+                // tempImg.style.left = "0";
+                // tempImg.style.zIndex = "99999";
+                // tempImg.style.width = "100px";
+                // tempImg.style.height = "100px";
+                document.body.appendChild(tempImg);
+   
+                html2canvas(document.getElementById("ttt")).then(canvas => {
+                    canvas.toBlob(function(blob) {
+                        saveAs(blob, Date.now() +".jpg");
+                        // saveAs(blob, Date.now() +"." +item.type);
+                        let imgEle = document.getElementById("ttt")
+                        imgEle.parentNode.removeChild(imgEle);
+                        // canvas = null;
+                    });
+                })
+
+            })
+            // console.log("getNewsDetail---")
+            // let params = {
+            //     HEADER: {},
+            //     PARAMS: {url:item.url},
+            //     SERVICE: "NewsService.getBase64ImageString"
+            // };
+            // $.post(G_baseUrl,params,function(result){
+
+            //     let tempImg = document.createElement("img");
+            //     tempImg.src = "data:image/jpeg;base64,"+JSON.parse(result).RESULT;
+            //     tempImg.id = "ttt"
+
+            //     tempImg.style.position = "fixed";
+            //     tempImg.style.top = "0";
+            //     tempImg.style.left = "0";
+            //     tempImg.style.zIndex = "99999";
+            //     tempImg.style.width = "100px";
+            //     tempImg.style.height = "100px";
+            //     document.body.appendChild(tempImg);
+   
+            //     // html2canvas(document.getElementById("ttt")).then(canvas => {
+            //     //     canvas.toBlob(function(blob) {
+            //     //         saveAs(blob, "hangge.png");
+            //     //         let imgEle = document.getElementById("ttt")
+            //     //         imgEle.parentNode.removeChild(imgEle);
+            //     //         canvas = null;
+            //     //         // document.body.removeChild(document.getElementById("ttt"));
+            //     //     });
+            //     // })
+            // });
+
+
+            // var imgEle = $(".bui-slide-img").get(uiSlide.index()); //将jQuery对象转换为dom对象
+            // console.log(imgEle)
+            // html2canvas(imgEle).then(canvas => {
+            // // html2canvas(document.getElementById("newsPage")).then(canvas => {
+            //                     var imgUrl = canvas.toDataURL("image/png"); // 将canvas转换成img的src流
+            //       console.log("base64编码数据：", imgUrl);
+            //     // // canvas.toBlob(function(blob) {
+            //     // //     saveAs(blob, "hangge.png");
+            //     // //  });
+            //     //         var imgUrl = canvas.toDataURL("image/png"); // 将canvas转换成img的src流
+            //     //     //   console.log("base64编码数据：", imgUrl);
+                    // let tempImg = document.createElement("img");
+                    // tempImg.src = imgUrl;
+                    // tempImg.id = "ttt"
+                    // tempImg.style.zIndex = "99999"
                     // tempImg.style.width = "100px";
                     // tempImg.style.height = "100px";
-                    document.body.appendChild(tempImg);
-                //     html2canvas(document.getElementById("ttt")).then(can => {
-    
-                //         can.toBlob(function(blob) {
-                //             saveAs(blob, "hangge.png");
-                //          });
-                //     })
-            });
-            // html2canvas(imgEle, {
-            //     backgroundColor: null,
-            //     //allowTaint: true,
-            //     useCORS: true,
-            //     onrendered: function(canvas) {
-            //         // var url = canvas.toDataURL();//图片地址
-            //         // document.body.appendChild(canvas);
+                    // document.body.appendChild(tempImg);
 
-            //         canvas.toBlob(function(blob) {
-            //             saveAs(blob, "hangge.png");
-            //          });
-            //     },
-            // })
-            // html2canvas(imgEle, {
-            //     onrendered: function(canvas) {
-            //         var url = canvas.toDataURL();//图片地址
-            //         document.body.appendChild(canvas);
-            //     },
-            //   width: 300,
-            //   height: 300
+            //     //     html2canvas(document.getElementById("ttt")).then(can => {
+    
+            //     //         can.toBlob(function(blob) {
+            //     //             saveAs(blob, "hangge.png");
+            //     //          });
+            //     //     })
             // });
+            // // html2canvas(imgEle, {
+            // //     backgroundColor: null,
+            // //     //allowTaint: true,
+            // //     useCORS: true,
+            // //     onrendered: function(canvas) {
+            // //         // var url = canvas.toDataURL();//图片地址
+            // //         // document.body.appendChild(canvas);
+
+            // //         canvas.toBlob(function(blob) {
+            // //             saveAs(blob, "hangge.png");
+            // //          });
+            // //     },
+            // // })
+            // // html2canvas(imgEle, {
+            // //     onrendered: function(canvas) {
+            // //         var url = canvas.toDataURL();//图片地址
+            // //         document.body.appendChild(canvas);
+            // //     },
+            // //   width: 300,
+            // //   height: 300
+            // // });
 
         })
 
