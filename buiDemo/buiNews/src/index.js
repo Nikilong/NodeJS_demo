@@ -1,5 +1,8 @@
 window.router = bui.router();
 
+// 移动端打开vconsole调试
+// new VConsole();
+
 bui.ready(function() {
     // 初始化路由
     router.init({

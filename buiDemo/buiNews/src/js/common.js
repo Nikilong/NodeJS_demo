@@ -344,46 +344,57 @@ function showImages(index){
 
         // 下载图片
         $("#downloadPicBtn").on("click",function(e){
-            let item = G_currentImgs[uiSlide.index()];
-            console.log(item)
+            console.log(bui.platform)
+            if(bui.platform.isAndroid() || bui.platform.isIos()){
+                bui.hint({ 
+                    "content": "长按图片可以保存", 
+                    "position": "top", 
+                    "effect": "fadeInDown",
+                    "skin": "warning"
+                });
+            }else{
 
-            common.getBase64ImageString(item.url,function(result){
-                let imgType = "";
-                switch (item.type) {
-                    case "gif":
-                        imgType = "data:image/gif;base64,"
-                        break;
-                    case "png":
-                        imgType = "data:image/png;base64,"
-                        break;
-                    case "icon":
-                        imgType = "data:image/x-icon;base64,"
-                        break;
-                    default:
-                        imgType = "data:image/jpeg;base64,"
-                        break;
-                }
-                let tempImg = document.createElement("img");
-                tempImg.src = imgType + JSON.parse(result).RESULT;
-                tempImg.id = "baseImgTemp"
-
-                // tempImg.style.position = "fixed";
-                // tempImg.style.top = "0";
-                // tempImg.style.left = "0";
-                // tempImg.style.zIndex = "99999";
-                // tempImg.style.width = "100px";
-                // tempImg.style.height = "100px";
-                document.body.appendChild(tempImg);
-   
-                html2canvas(document.getElementById("baseImgTemp")).then(canvas => {
-                    canvas.toBlob(function(blob) {
-                        saveAs(blob, Date.now() +"." +item.type);
-                        let imgEle = document.getElementById("baseImgTemp")
-                        imgEle.parentNode.removeChild(imgEle);
-                    });
+                let item = G_currentImgs[uiSlide.index()];
+                console.log(item)
+    
+                common.getBase64ImageString(item.url,function(result){
+                    let imgType = "";
+                    switch (item.type) {
+                        case "gif":
+                            imgType = "data:image/gif;base64,"
+                            break;
+                        case "png":
+                            imgType = "data:image/png;base64,"
+                            break;
+                        case "icon":
+                            imgType = "data:image/x-icon;base64,"
+                            break;
+                        default:
+                            imgType = "data:image/jpeg;base64,"
+                            break;
+                    }
+                    let tempImg = document.createElement("img");
+                    tempImg.src = imgType + JSON.parse(result).RESULT;
+                    tempImg.id = "baseImgTemp"
+    
+                    // tempImg.style.position = "fixed";
+                    // tempImg.style.top = "0";
+                    // tempImg.style.left = "0";
+                    // tempImg.style.zIndex = "99999";
+                    // tempImg.style.width = "100px";
+                    // tempImg.style.height = "100px";
+                    document.body.appendChild(tempImg);
+       
+                    html2canvas(document.getElementById("baseImgTemp")).then(canvas => {
+                        canvas.toBlob(function(blob) {
+                            saveAs(blob, Date.now() +"." +item.type);
+                            let imgEle = document.getElementById("baseImgTemp")
+                            imgEle.parentNode.removeChild(imgEle);
+                        });
+                    })
+    
                 })
-
-            })
+            }
 
         })
 
