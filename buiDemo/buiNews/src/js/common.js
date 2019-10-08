@@ -51,12 +51,18 @@ var common = {
         // 计算列表的高度
         var listHeight = slideHeight - $("#uiSlideNavbar").height() ;
 
+        let params = {id:G_channelConfig[G_currendChannelIndex]["id"]};
+        // 添加城市定位
+        if(G_channelConfig[G_currendChannelIndex]["id"] === "200"){
+            params.cityName = encodeURI(G_channelConfig[G_currendChannelIndex]["name"]);
+        }
+
         return bui.list({
             id: "#uiScroll"+(G_currendChannelIndex+1),
             url: G_baseUrl,
             data: {
                 HEADER: {},
-				PARAMS: {id:G_channelConfig[G_currendChannelIndex]["id"]},
+				PARAMS: params,
 				SERVICE: "NewsService.getNewsByChannel"
             },//接口请求的参数
             // 可选参数

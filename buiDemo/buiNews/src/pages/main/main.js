@@ -66,6 +66,16 @@ loader.define(function(require, exports, module) {
             mask: false
         });
 
+        // 显示当前城市名称
+        for (const key in G_channelConfig) {
+            if (G_channelConfig.hasOwnProperty(key)) {
+                const element = G_channelConfig[key];
+                if(element["id"] === "200"){
+                    $(".location_city").text(element["name"]).show();
+                }
+            }
+        }
+
         // 弹出按钮的事件绑定
         $("#moreChannelBtn").on("click",function(){
             uiDialogNav.open();
@@ -89,7 +99,6 @@ loader.define(function(require, exports, module) {
             let targetEle = $("#uiScroll"+(G_currendChannelIndex + 1))[0];
             common.scrollAnimation(targetEle,targetEle.scrollTop,0);
         })
-
 
     }
 
