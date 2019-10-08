@@ -1,5 +1,6 @@
 window.router = bui.router();
 window.BMap = BMap;
+window.BMapSub = BMapSub;
 
 // 移动端打开vconsole调试
 // new VConsole();
