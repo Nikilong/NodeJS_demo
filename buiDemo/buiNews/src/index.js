@@ -32,25 +32,21 @@ function buiReadyFunc(){
 }
 
 // 获取当前定位(使用百度地图API)
-let geolocation = new BMap.Geolocation()
-geolocation.enableSDKLocation(); //允许SDK辅助
-geolocation.getCurrentPosition(function (r) {
-
-    // 定位当前城市
-    if(this.getStatus() == 0){
-        console.log(r)
-        let cityName = r.address.city.substring(0,r.address.city.length - 1)
-        for (const key in G_channelConfig) {
-            if (G_channelConfig.hasOwnProperty(key)) {
-                const element = G_channelConfig[key];
-                if(element["id"] === "200"){
-                    G_channelConfig[key]["name"] = cityName;
-                }
+var myCity = new BMap.LocalCity();
+myCity.get(function(result){
+    // 定位当前城市 
+    console.log(result)
+    let cityName = result.name.substring(0,result.name.length - 1)
+    for (const key in G_channelConfig) {
+        if (G_channelConfig.hasOwnProperty(key)) {
+            const element = G_channelConfig[key];
+            if(element["id"] === "200"){
+                G_channelConfig[key]["name"] = cityName;
             }
         }
     }
-
-
+    
+    
     // 初始化bui
     buiReadyFunc();
 })
