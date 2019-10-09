@@ -7,6 +7,8 @@ loader.define(function(require,exports,module) {
       let _this = pageview;
       $("#metro-back").on("click", function(e) {
         bui.back({name:"main"});
+        e.preventDefault();
+        e.stopPropagation();
       })
     }
 
