@@ -12,17 +12,13 @@
 <body>
 <div id="container"></div>
 <script type="text/javascript">
-    /**
-     * 从所有城市列表中获取北京信息
-     * 结果格式
-     * {
-     *     keyword: 'beijing',
-     *     name: '北京',
-     *     citycode: '131'
-     * }
-     */
-     /* globals BMapSub */
-    var subwayCityName = '北京';
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return r[2]; return null;
+    }
+
+    var subwayCityName = decodeURI(GetQueryString("cityName")) || "广州";
     var list = BMapSub.SubwayCitiesList;
     var subwaycity = null;
     for (var i = 0; i < list.length; i++) {

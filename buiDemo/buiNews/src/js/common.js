@@ -1,6 +1,7 @@
 // 后台服务器地址
 var G_baseUrl =  "http://120.78.165.47:4001/servers";
 // var G_baseUrl = "http://localhost:4001/servers";
+var G_localcity = "广州";
 var G_newsData = [];
 var G_currendChannelIndex = 0;
 var G_channelConfig = [
@@ -18,7 +19,7 @@ var G_channelConfig = [
     {"name":"军事","id":"1105405272"},
     {"name":"历史","id":"701104723"},
     {"name":"数码","id":"835729"},
-    {"name":"广州","id":"200"},
+    {"name":G_localcity,"id":"200"},
     {"name":"美食","id":"10000"},
     {"name":"综艺","id":"10465"},
     {"name":"电影","id":"1404457531635"},

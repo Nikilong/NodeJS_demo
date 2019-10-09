@@ -67,15 +67,12 @@ loader.define(function(require, exports, module) {
         });
 
         // 显示当前城市名称
-        for (const key in G_channelConfig) {
-            if (G_channelConfig.hasOwnProperty(key)) {
-                const element = G_channelConfig[key];
-                if(element["id"] === "200"){
-                    $(".location_city").text(element["name"]).show();
-                }
-            }
-        }
+        $(".location_city").text(G_localcity).show();
 
+        // 弹出地铁图
+        $("#metro-btn").on("click",function(){
+            bui.load({url:"pages/metro-detail/metro-detail.html",param:{"cityName":G_localcity} });
+        });
         // 弹出按钮的事件绑定
         $("#moreChannelBtn").on("click",function(){
             uiDialogNav.open();

@@ -1,18 +1,24 @@
-<style>
-    #metro_container{
-        height: 100%;
-    }
-</style>
-
 <div class="bui-page detail-page">
     <header class="bui-bar">
-        <div class="bui-bar-left">
-            <!-- 左边按钮 -->
-            <a class="bui-btn btn-back"><i class="icon-back"></i></a>
+        <div class="bui-bar-left" style="overflow:visible;">
+            <a class="bui-btn btn-back" id="metro-back"><i class="icon-back"></i></a>
+            <!-- <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a> -->
         </div>
-        <div class="bui-bar-main"></div>
+        <div class="bui-bar-main">
+            
+            <!-- 不修改文本值 -->
+            <div id="barMain" class="bui-dropdown bui-arrow-center">
+                <div class="bui-btn">
+                    <span class="span1">区域</span>
+                    <i class="icon-dropdown"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 这个样式要设置才会看到二级菜单 -->
+        <div class="bui-bar-right"></div>
     </header>
-    <main id="metro_main">
-        <div id="metro_container"></div>
+    <main>
+        <iframe id="metro-frame" frameborder="0" width="100%" height="100%"></iframe>
     </main>
 </div>

@@ -37,7 +37,8 @@ var myCity = new BMap.LocalCity();
 myCity.get(function(result){
     // 定位当前城市 
     console.log(result)
-    let cityName = result.name.substring(0,result.name.length - 1)
+    let cityName = result.name.substring(0,result.name.length - 1);
+    G_localcity = cityName;
     for (const key in G_channelConfig) {
         if (G_channelConfig.hasOwnProperty(key)) {
             const element = G_channelConfig[key];
