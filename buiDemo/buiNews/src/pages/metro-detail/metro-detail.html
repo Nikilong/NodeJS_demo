@@ -1,24 +1,37 @@
-<div class="bui-page detail-page">
-    <header class="bui-bar">
-        <div class="bui-bar-left" style="overflow:visible;">
-            <a class="bui-btn btn-back" id="metro-back"><i class="icon-back"></i></a>
-            <!-- <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a> -->
+<div id="uiSwipe" class="wrap">
+    <!-- 侧滑菜单 -->
+    <div class="swipeleft" data-moving="300">
+        <div class="bui-box-align-center">
+                <h1>选择城市</h1>
         </div>
-        <div class="bui-bar-main">
-            
-            <!-- 不修改文本值 -->
-            <div id="barMain" class="bui-dropdown bui-arrow-center">
-                <div class="bui-btn">
-                    <span class="span1">区域</span>
-                    <i class="icon-dropdown"></i>
+        <ul id="citysContainer"></ul>
+    </div>
+    <!-- 正文内容 -->
+    <div class="bui-page">
+        <header class="bui-bar">
+            <div class="bui-bar-left" style="overflow:visible;">
+                <a class="bui-btn btn-back" id="metro-back"><i class="icon-back"></i></a>
+            </div>
+            <div class="bui-bar-main">
+                
+                <!-- 不修改文本值 -->
+                <div id="barMain" class="bui-dropdown bui-arrow-center">
+                    <div class="bui-btn">
+                        <span class="span1">区域</span>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- 这个样式要设置才会看到二级菜单 -->
-        <div class="bui-bar-right"></div>
-    </header>
-    <main>
-        <iframe id="metro-frame" frameborder="0" width="100%" height="100%"></iframe>
-    </main>
+            
+            <!-- 这个样式要设置才会看到二级菜单 -->
+            <!-- <div class="bui-bar-right" id="download-map">
+                <a class="bui-btn"><i class="icon-down"></i></a>
+            </div> -->
+            <div class="bui-bar-right" id="change-city">
+                <a class="bui-btn"><i class="icon-alignjustify"></i></a>
+            </div>
+        </header>
+        <main>
+            <iframe id="metro-frame" frameborder="0" width="100%" height="100%"></iframe>
+        </main>
+    </div>
 </div>

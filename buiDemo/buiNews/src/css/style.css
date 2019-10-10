@@ -64,6 +64,11 @@ h3.item-title{
     color:#666;
 }
 
+.bui-btn-select{
+    background: RGBA(166, 227, 255, 0.21);
+    border: 1px solid #39a4ff;
+}
+
 /* .bui-page img {
     max-width: 80%;
     margin: auto 10%;

@@ -13,6 +13,15 @@ function buiReadyFunc(){
             id: "#bui-router",
             progress: true,
             hash: true,
+            beforeLoad: function(e) {
+                console.log(e.target.pid)
+                // if( e.target.pid === "pages/metro-detail/metro-detail"){
+                //     router.load({
+                //         url:"pages/metro-detail/metro-detail",
+                //         params:{cityName:G_localvity}
+                //     })
+                // }
+            }
         })
     
         // 绑定事件
@@ -25,6 +34,7 @@ function buiReadyFunc(){
     
             // 统一绑定页面所有的后退按钮
             $("#bui-router").on("click", ".btn-back", function(e) {
+                console.log("909009090909")
                 // 支持后退多层,支持回调
                 bui.back();
             })
