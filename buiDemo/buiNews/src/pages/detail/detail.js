@@ -30,13 +30,25 @@ loader.define(function(require,exports,module) {
       $('.share').on("click",function (argument) {
         dialog.open();
       })
+      // 关闭页面按钮
+      $('#close-page-btn').on("click",function (argument) {
+        // // router.destroy("pages/detail/detail.html");
+        // // console.log(router.currentPage())
+        // $(router.currentPage()).remove();
+        // bui.back();
+      })
     }
 
     pageview.init = function () {
       // 获取新闻的参数
       bui.getPageParams().done(function(result){
         pageParams = result;
-        let weburl = `http://m.uczzd.cn/webview/news?app=uc-iflow&aid=${pageParams.id}&cid=100&zzd_from=uc-iflow&uc_param_str=dndsfrvesvntnwpfgicp&recoid=3902548323263252739&rd_type=reco&sp_gz=1`;
+        let weburl = "";
+        if(pageParams.id){
+          weburl = `http://m.uczzd.cn/webview/news?app=uc-iflow&aid=${pageParams.id}&cid=100&zzd_from=uc-iflow&uc_param_str=dndsfrvesvntnwpfgicp&recoid=3902548323263252739&rd_type=reco&sp_gz=1`;
+        }else if(pageParams.keyword){
+          weburl = `https://m.so.com/s?src=dfttrc&srcg=sina_shoulang_act&nav=0&q=${pageParams.keyword}`;
+        }
         console.log(weburl)
         $("#mainContent").attr({
           "height":$(window).height() - $("footer").height() - $("header").height() - 3,
@@ -56,28 +68,6 @@ loader.define(function(require,exports,module) {
         //   }
         // })
 
-        //动态渲染
-        var uiDoropdown = bui.dropdown({
-          id: "#uiDoropdownArea",
-          data: [{
-              name: "广州",
-              value: "gz"
-          }, {
-              name: "广东",
-              value: "gd"
-          }],
-          //设置relative为false,二级菜单继承父层宽度
-          relative: false,
-          value: "广东",
-          onChange: function(e) {
-              console.log(this.value(), "change")
-          },
-          callback: function(e) {
-              console.log(this.value(), "click")
-              console.log(this.text(), "click")
-              console.log(this.values(), "click")
-          }
-      })
       })
        
        this.bind();

@@ -9,11 +9,7 @@ loader.define(function(require, exports, module) {
 
     // 模块初始化定义
     pageview.init = function() {
-        // // 初始化新闻页的main的高度,需要减去最外层的公用footer;
-        // var newspageMainHeight = bui.init({
-        //     id:"#newsPage",
-        //     footer:"#tabDynamicNav"
-        // });
+        let _this = pageview;
 
         // 1.顶部滑动tabbar初始化
         // 绑定顶部的tab的名称的href
@@ -22,7 +18,7 @@ loader.define(function(require, exports, module) {
             $(ele).attr("href",`pages/home-tab/home-tab${index+1}.html?id=${G_channelConfig[index]["id"]}`);
         });
 
-        // 先初始化
+        // 先初始化tab
         var uiTab = bui.tab({
             id:"#uiTabNavbar",
             menu:"#nav",
@@ -57,7 +53,7 @@ loader.define(function(require, exports, module) {
         });
         $("#channelDialog").html(html);
 
-        // 栏目弹出菜单, 因为要遮住底部的导航, 所以弹出层需要跟底部导航在一块初始化
+        // 3.栏目弹出菜单, 因为要遮住底部的导航, 所以弹出层需要跟底部导航在一块初始化
         var uiDialogNav = bui.dialog({
             id: "#uiDialog",
             position:"right",
@@ -69,6 +65,82 @@ loader.define(function(require, exports, module) {
         // 显示当前城市名称
         $(".location_city").text(G_localcity).show();
 
+
+
+        // 4.搜索页面
+        var searchDialog = bui.dialog({
+            id: "#searchUIDialog",
+            fullscreen: true,
+            mask: false,
+            effect: "fadeInRight"
+        });
+        pageview.searchDialog = searchDialog;
+
+        //搜索条的初始化
+        var uiSearchbar = bui.searchbar({
+            id: "#searchbar",
+            onInput: function(ui, keyword) {
+                //实时搜索
+                console.log(keyword);
+                this.search(keyword);
+            },
+            onRemove: function(ui, keyword) {
+                //删除关键词需要做什么其它处理
+                console.log(keyword);
+            },
+            callback: function(ui, keyword) {
+                let params = {
+                    HEADER: {},
+                    PARAMS: {keyword:keyword},
+                    SERVICE:  "NewsService.searchNews"
+                }
+                common.newsServers(params,function(data){
+                    console.log(data)
+                    try{
+                        data = JSON.parse(data)
+                        if(data.status === "success"){
+                            let list = data.RESULT.data.sug
+                            if(list && list.length > 0){
+                                let html = "";
+                                list.forEach((item,i)=>{
+                                    html += `
+                                    <li class="bui-btn bui-box" href="pages/detail/detail.html?keyword=${encodeURI(item.word)}">
+                                        <p class="item-text">${item.word}</p>
+                                    </li>`
+                                })
+                                
+                                $("#scrollSearch").html(html)
+                            }else{
+                                bui.alert("没有查询到数据");
+                            }
+                        }
+
+                    }catch(e){console.log(e)}
+                });
+            }
+
+        });
+
+
+        $("#btnSearchDialog").on("click", function(argument) {
+            pageview.searchDialog.open();
+        })
+        $("#btnBack").on("click", function(argument) {
+            pageview.searchDialog.close();
+        })
+        $("#btnSearch").on("click", function(argument) {
+            uiSearchbar.search();
+        })
+
+    }
+    
+    pageview.event = function(){
+        let _this = pageview;
+        
+        // 搜索
+        $("#search").on("click",function(){
+            _this.searchDialog.open();
+        });
         // 弹出地铁图
         $("#metro-btn").on("click",function(){
             bui.load({url:"pages/metro-detail/metro-detail.html",param:{"cityName":G_localcity} });
@@ -78,7 +150,7 @@ loader.define(function(require, exports, module) {
             uiDialogNav.open();
             $("#channelDialog").find("input").eq(G_currendChannelIndex).attr("checked",true);
         });
-
+    
         // (弹出界面)选择了频道的事件绑定
         $("#channelDialog").on("click",function(e){
             e.stopPropagation();
@@ -96,12 +168,12 @@ loader.define(function(require, exports, module) {
             let targetEle = $("#uiScroll"+(G_currendChannelIndex + 1))[0];
             common.scrollAnimation(targetEle,targetEle.scrollTop,0);
         })
-
-    }
-
+    
+    };
 
     // 初始化
     pageview.init();
+    pageview.event();
 
     // 输出模块
     return pageview;

@@ -45,6 +45,15 @@ G_channelConfig.forEach(()=>{
 })
 
 var common = {
+    // 通用查询接口方法
+    newsServers:function (params,callback) {
+        console.log("---",params.SERVICE)
+        $.post(G_baseUrl,params,function(result){
+            callback && callback(result)
+        });
+        
+    },
+
     getNewsByChannel:function (channelId) {
         console.log(G_currendChannelIndex,"++++",G_channelConfig[G_currendChannelIndex]["id"])
         var slideHeight = $(window).height() - $(".bui-bar-side").height() - $("#uiNewsTabNav").height();
@@ -255,7 +264,6 @@ var common = {
         });
         
     },
-
     // 通过url获取base64编码,一般用于图片base64获取
     getBase64ImageString:function (url,callback) {
         console.log("getBase64ImageString---")

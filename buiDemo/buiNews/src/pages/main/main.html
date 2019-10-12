@@ -48,9 +48,9 @@
       <div class="bui-bar-main"><img class="logo-pic" src="images/home/logo.png"/></div>
       <div class="bui-bar-right">
           <!-- 右边图片 -->
-          <!-- <a class="bui-btn search" id="search">
+          <a class="bui-btn search" id="search">
               <img src="images/home/search.png"/>
-          </a> -->
+          </a>
           <!-- 右边,地铁图 -->
           <a class="bui-btn" id="metro-btn">
               <img src="images/home/metro.svg"/>
@@ -177,4 +177,31 @@
         </div>
     </div>
     <div class="bui-dialog-close"><i class="icon-listup"></i></div>
+</div>
+
+<!-- 搜索框 -->
+<div id="searchUIDialog" class="bui-dialog" style="display: none;">
+    <div class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" id="btnBack"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">
+            <div id="searchbar" class="bui-input ring mini">
+              <i class="icon-search"></i>
+              <input type="search" value="" placeholder="请输入关键字"/>
+            </div>
+        </div>
+    </div>
+    <div class="bui-dialog-main">
+      
+      <!-- 列表控件结构 -->
+      <div id="scrollSearch" class="bui-scroll">
+        <div class="bui-scroll-head"></div>
+        <div class="bui-scroll-main">
+          <ul class="bui-list">
+          </ul> 
+        </div>
+        <div class="bui-scroll-foot"></div>
+      </div>
+    </div>
 </div>
