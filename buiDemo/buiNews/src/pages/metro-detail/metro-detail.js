@@ -7,14 +7,14 @@ loader.define(function(require,exports,module) {
     pageview.bind = function () {
       let _this = pageview;
       // 返回事件
-      $("#metro-back").on("click", function(e) {
+      router.$("#metro-back").on("click", function(e) {
         bui.back({name:"main"});
         e.preventDefault();
         e.stopPropagation();
       })
 
       // 改变城市
-      $("#change-city").on("click", function(e) {
+      router.$("#change-city").on("click", function(e) {
         pageview.uiSwipe.open({
           "target":"swipeleft",
           "transition": "none"
@@ -62,10 +62,10 @@ loader.define(function(require,exports,module) {
               </div>
           `;
         });
-        $("#citysContainer").html(html);
+        router.$("#citysContainer").html(html);
 
         // (弹出界面)选择了频道的事件绑定
-        $("#citysContainer").on("click",".bui-btn",function(e){
+        router.$("#citysContainer").on("click",".bui-btn",function(e){
           // 收起弹框
           _this.uiSwipe.close();
 
@@ -73,7 +73,7 @@ loader.define(function(require,exports,module) {
           let ele = $(e.target);
           let selectIndex = ele.attr("data-index");
           if(selectIndex != _this.currentCityIndex){
-            $("#citysContainer").find(".bui-btn").eq(_this.currentCityIndex).removeClass("bui-btn-select");
+            router.$("#citysContainer").find(".bui-btn").eq(_this.currentCityIndex).removeClass("bui-btn-select");
             ele.addClass("bui-btn-select");
             _this.currentCityIndex = selectIndex;
             _this.loadDetail(ele.text());
@@ -111,11 +111,11 @@ loader.define(function(require,exports,module) {
 
   // 加载地铁图
   pageview.loadDetail = function(cityName){
-    $("#metro-frame").attr("src","about:blank");
+    router.$("#metro-frame").attr("src","about:blank");
     if(!cityName) cityName = G_localcity;
     let url = "./metro.html?cityName="+ encodeURI(cityName)
-    $("#barMain").find("span").text(cityName);
-    $("#metro-frame").attr("src",url);
+    router.$("#barMain").find("span").text(cityName);
+    router.$("#metro-frame").attr("src",url);
   }
 
   // 页面初始化

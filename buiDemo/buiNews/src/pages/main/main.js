@@ -64,6 +64,27 @@ loader.define(function(require, exports, module) {
         // 搜索
         router.$("#search").on("click",function(){
             _this.searchDialog.open();
+            // 热点新闻加载
+            let paramsHot = {
+                SERVICE:  "NewsService.getHotNews"
+            }
+            common.newsServers(paramsHot,function(data){
+                try{
+                    data = JSON.parse(data);
+                    let list = JSON.parse(data.RESULT);
+                    let hotNewsHtml = "";
+                    list.forEach((item,i)=>{
+                        hotNewsHtml += `
+                            <li class="span6">
+                                <div class="bui-btn" href="pages/detail/detail.html?keyword=${item.title}">${item.title}</div>
+                            </li>
+                        `;
+                    })
+
+                    router.$("#hotNews-container").find(".bui-fluid").html(hotNewsHtml);
+
+                }catch(e){console.log(e)}
+            });
         });
         // 弹出地铁图
         router.$("#metro-btn").on("click",function(){
@@ -169,9 +190,10 @@ loader.define(function(require, exports, module) {
                             if(list && list.length > 0){
                                 let html = "";
                                 list.forEach((item,i)=>{
+                                    let titleStr = item.word.replace(new RegExp(keyw,"g"),`<span class="keyword">${keyw}</span>`);
                                     html += `
                                     <li class="bui-btn bui-box" href="pages/detail/detail.html?keyword=${encodeURI(item.word)}">
-                                        <p class="item-text"><span class="keyword">${keyw}</span>${item.word.replace(keyw,"")}</p>
+                                        <p class="item-text">${titleStr}</p>
                                     </li>`
                                 })
                                 
@@ -187,31 +209,6 @@ loader.define(function(require, exports, module) {
             }
 
         });
-
-        // 热点新闻加载
-        let paramsHot = {
-            SERVICE:  "NewsService.getHotNews"
-        }
-        common.newsServers(paramsHot,function(data){
-            
-            try{
-                data = JSON.parse(data);
-                let list = JSON.parse(data.RESULT);
-                let hotNewsHtml = "";
-                list.forEach((item,i)=>{
-                    hotNewsHtml += `
-                        <li class="span6">
-                            <div class="bui-btn" href="pages/detail/detail.html?keyword=${item.title}">${item.title}</div>
-                        </li>
-                    `;
-                })
-
-                router.$("#hotNews-container").find(".bui-fluid").html(hotNewsHtml);
-
-            }catch(e){console.log(e)}
-        });
-
-
     };
 
     // 初始化

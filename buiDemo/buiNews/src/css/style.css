@@ -34,6 +34,11 @@
 
 
 /*示例样式, 可以删掉 end*/
+.keyword{
+    font-weight: 900;
+    color:#000;
+}
+
 .bui-router-item{
     background:#fff;
 }
@@ -67,6 +72,11 @@ h3.item-title{
 .bui-btn-select{
     background: RGBA(166, 227, 255, 0.21);
     border: 1px solid #39a4ff;
+}
+
+.bui-box h2{
+    padding:.2rem;
+    font-weight:900;
 }
 
 /* .bui-page img {

@@ -294,7 +294,18 @@ var common = {
                 targetEle.scrollTo(_currentY, targetY)
             }
         }, 1)
-    }
+    },
+    toast:function(type,text,position){
+        position = position || "center";
+        let typeIcon = "";
+        if(type === "success"){
+            typeIcon = "icon-check";
+        }else if(type === "fail"){
+            typeIcon = "icon-error danger";
+
+        }
+        bui.hint({ content: `<i class='${typeIcon}'></i><br />${text}`, position: position, effect: "fadeInDown" });
+    },
 }
 
 

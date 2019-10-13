@@ -48,6 +48,8 @@ loader.define(function(require,exports,module) {
           weburl = `http://m.uczzd.cn/webview/news?app=uc-iflow&aid=${pageParams.id}&cid=100&zzd_from=uc-iflow&uc_param_str=dndsfrvesvntnwpfgicp&recoid=3902548323263252739&rd_type=reco&sp_gz=1`;
         }else if(pageParams.keyword){
           weburl = `https://m.so.com/s?src=dfttrc&srcg=sina_shoulang_act&nav=0&q=${pageParams.keyword}`;
+        }else if(pageParams.url){
+          weburl = pageParams.url;
         }
         console.log(weburl)
         $("#mainContent").attr({
